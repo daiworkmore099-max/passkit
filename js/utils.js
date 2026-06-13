@@ -376,7 +376,6 @@ const PKUtils = (() => {
     document.body.insertAdjacentHTML('beforeend', buildFooter());
     initAurora();
     initParticles();
-    initFooterRating();
     initFooterShare();
   }
 
