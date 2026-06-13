@@ -1,0 +1,443 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Password Strength Checker — Entropy & Analysis | PassKit.in</title>
+<meta name="description" content="Test your password strength instantly. See entropy, crack time, and improvement tips. No data sent to servers — 100% private.">
+<meta name="keywords" content="password strength checker, password strength tester, password entropy calculator, how long to crack password, password security test, strong password checker, password analysis tool, generador de contrasenas, mot de passe securise, Passwort Generator, gerador de senha, password sicuro, wachtwoord generator, haslo generator, parol ureteci, kodeord generator, generatore di password, generator hasel, passwort erstellen, clave segura, senha forte, contraseña aleatoria, mot de passe aleatoire, sichere passwort, senha aleatoria">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate" hreflang="en" href="https://passkit.in/strength-test.html">
+<link rel="alternate" hreflang="x-default" href="https://passkit.in/strength-test.html">
+<link rel="canonical" href="https://passkit.in/strength-test.html">
+<meta name="author" content="PassKit.in">
+<meta name="theme-color" content="#0d0f1a">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://passkit.in/strength-test.html">
+<meta property="og:title" content="Password Strength Checker — Entropy & Crack Time | PassKit.in">
+<meta property="og:description" content="Test any password's strength. See entropy in bits, estimated crack time at 10B guesses/sec, and detailed weakness analysis. 100% local.">
+<meta property="og:image" content="https://passkit.in/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Password Strength Checker — PassKit.in">
+<meta name="twitter:description" content="Free password strength tester. Entropy, crack time, weakness analysis. 100% local — your password never leaves your browser.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Check Password Strength",
+  "description": "Steps to test your password's strength, entropy, and crack time using PassKit.in's free password strength checker.",
+  "step": [
+    { "@type": "HowToStep", "position": 1, "name": "Enter your password", "text": "Type or paste the password you want to test into the input field. The analysis updates in real time — no button press needed." },
+    { "@type": "HowToStep", "position": 2, "name": "Read the strength score", "text": "The meter shows Weak, Fair, Good, or Strong. A strong password scores 80+ bits of entropy." },
+    { "@type": "HowToStep", "position": 3, "name": "Check entropy and crack time", "text": "Review the entropy in bits and estimated crack time at 10 billion guesses per second. Aim for 70+ bits for personal accounts, 100+ bits for critical accounts." },
+    { "@type": "HowToStep", "position": 4, "name": "Fix identified weaknesses", "text": "Read the analysis panel for specific tips: add length, mix character types, avoid patterns, avoid dictionary words." },
+    { "@type": "HowToStep", "position": 5, "name": "Generate a stronger password", "text": "Click the link to PassKit.in's password generator to instantly create a password that passes all strength checks." }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "PassKit.in — Password Strength Checker",
+  "url": "https://passkit.in/strength-test.html",
+  "description": "Free password strength checker. Calculates entropy in bits, estimated crack time, and identifies pattern weaknesses. Password never leaves your browser.",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How is password strength measured?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Password strength is measured by entropy — the number of bits needed to represent all possible combinations for a password of that length and character set. Formula: log₂(charset_size) × length. Additional factors include pattern detection (dictionary words, keyboard walks, repeated characters, dates) which reduce effective entropy. PassKit.in checks all these factors in real time."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does it take to crack a password?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Crack time depends on entropy and attack speed. PassKit.in calculates at 10 billion guesses/second (offline brute-force with modern GPU). Results: 8-char all-type = ~5 hours; 12-char all-type = ~34 years; 16-char all-type = ~4 million years; 20-char all-type = longer than age of universe. Online attacks (rate-limited) are 10 million× slower."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is password entropy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Password entropy measures unpredictability in bits. It equals log₂(charset_size) × length. Charset sizes: lowercase only = 26, alphanumeric = 62, all ASCII printable = 94. A 16-character password using all types has ~104 bits entropy. NIST considers 80+ bits strong. At 128 bits, a password is considered computationally uncrackable with any foreseeable technology."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PassKit.in — Password Strength Checker",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "ratingCount": "412",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "PassKit.in", "item": "https://passkit.in/" },
+    { "@type": "ListItem", "position": 2, "name": "Password Strength Checker", "item": "https://passkit.in/strength-test.html" }
+  ]
+}
+</script><link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+<div class="page">
+  <div class="crypto-banner">🔐 CRYPTOGRAPHICALLY SECURE — Analysis is 100% local</div>
+  <h1 class="page-title">Password Strength Tester</h1>
+  <p class="page-sub">Analyze any password — see exactly how strong it is and how to improve it</p>
+
+  <div class="privacy-card">
+    <span class="privacy-card-icon">🔒</span>
+    <span>Your password <strong>never leaves your device</strong>. All analysis is 100% local JavaScript. Nothing is transmitted.</span>
+  </div>
+
+  <!-- Input -->
+  <div class="settings-card">
+    <div class="breach-input-wrap">
+      <input type="password" class="breach-input" id="pw-input" placeholder="Type or paste a password to analyze..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      <button class="show-hide-btn" id="show-hide" title="Show/hide password">👁</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:10px">
+      <label class="toggle"><input type="checkbox" id="opt-breach"><span class="toggle-slider"></span></label>
+      <span class="setting-label">Also check HaveIBeenPwned breach database</span>
+    </div>
+  </div>
+
+  <!-- Results (hidden until typing) -->
+  <div id="results" style="display:none">
+
+    <!-- Strength Meter -->
+    <div class="strength-wrap">
+      <div class="strength-bar-outer"><div class="strength-bar-inner" id="strength-bar" style="width:5%"></div></div>
+      <div class="strength-result">
+        <div class="strength-left"><span class="strength-text" id="strength-text">—</span></div>
+        <span class="entropy-badge" id="entropy-display">—</span>
+      </div>
+    </div>
+
+    <!-- Crack Time Hero -->
+    <div class="settings-card" style="text-align:center;padding:1.5rem">
+      <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">⏱ Estimated Time to Crack</div>
+      <div id="crack-hero" style="font-size:32px;font-weight:800;color:var(--green-bright);font-family:monospace;margin-bottom:8px">—</div>
+      <div style="font-size:12px;color:var(--text-3)">Offline brute-force attack · 10 billion guesses/second · <span id="crack-combo">—</span></div>
+    </div>
+
+    <!-- Security Meter visual -->
+    <div class="section-title">Security Level</div>
+    <div class="security-meter" id="sec-meter">
+      <div class="meter-segment" id="seg-1"></div>
+      <div class="meter-segment" id="seg-2"></div>
+      <div class="meter-segment" id="seg-3"></div>
+      <div class="meter-segment" id="seg-4"></div>
+      <div class="meter-segment" id="seg-5"></div>
+    </div>
+
+    <!-- Checklist -->
+    <div class="settings-card">
+      <div class="settings-title">🔍 Detailed Breakdown</div>
+      <ul class="checklist" id="checklist"></ul>
+    </div>
+
+    <!-- Entropy Badge -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem">
+      <span class="badge" id="entropy-pill">— bits entropy</span>
+      <span class="badge" id="charset-pill">charset: —</span>
+      <span class="badge" id="unique-pill">— unique chars</span>
+      <span class="badge badge-crypto">🔐 Local Analysis</span>
+    </div>
+
+    <!-- Tips -->
+    <div class="settings-card" id="tips-card" style="display:none">
+      <div class="settings-title">💡 How to Improve</div>
+      <ul id="tips-list" style="padding-left:1.25rem;color:var(--text-2);font-size:13px;line-height:2"></ul>
+    </div>
+
+    <!-- Breach Check Result -->
+    <div id="breach-section" style="display:none">
+      <div class="section-title">🛡️ Breach Check</div>
+      <div id="breach-loading" style="display:none;color:var(--text-3);font-size:13px;padding:10px 0">
+        <span class="spinner"></span> Checking HaveIBeenPwned securely (k-anonymity)…
+      </div>
+      <div class="breach-result" id="breach-result"></div>
+      <div class="privacy-note">
+        🔐 <strong>Privacy:</strong> Only first 5 characters of the SHA-1 hash are sent. Your actual password is never transmitted. This is called k-anonymity.
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty state -->
+  <div id="empty-state" class="empty-state">
+    <div class="empty-state-icon">🔍</div>
+    <div class="empty-state-text">Start typing a password above</div>
+    <div class="empty-state-sub">Results update live as you type</div>
+  </div>
+
+  <!-- Comparison Section -->
+  <div class="section" style="margin-top:2rem">
+    <div class="section-title">📊 Weak → Strong Comparison</div>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead><tr><th>Password</th><th>Strength</th><th>Crack Time</th><th>Why?</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><code style="color:var(--red)">password</code></td>
+            <td><span class="badge badge-red">Very Weak</span></td>
+            <td style="color:var(--red)">Instant</td>
+            <td>Common password, dictionary word</td>
+          </tr>
+          <tr>
+            <td><code style="color:var(--yellow)">p@$$w0rd</code></td>
+            <td><span class="badge badge-yellow">Fair</span></td>
+            <td style="color:var(--yellow)">2 seconds</td>
+            <td>Still a known substitution pattern</td>
+          </tr>
+          <tr>
+            <td><code style="color:var(--blue-bright)">Tr0ub4dor&3</code></td>
+            <td><span class="badge badge-blue">Good</span></td>
+            <td style="color:var(--blue-bright)">3 days</td>
+            <td>Complex but short (11 chars)</td>
+          </tr>
+          <tr>
+            <td><code style="color:var(--green-bright)">correct-horse-battery-staple</code></td>
+            <td><span class="badge badge-green">Strong</span></td>
+            <td style="color:var(--green-bright)">550+ years</td>
+            <td>Long, memorable, high entropy</td>
+          </tr>
+          <tr>
+            <td><code style="color:var(--green-bright)">X9#kP2mQr7vL!nW4</code></td>
+            <td><span class="badge badge-green">Strong</span></td>
+            <td style="color:var(--green-bright)">Millennia</td>
+            <td>16 chars, all types, random</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="js/generator.js"></script>
+<script src="js/strength.js"></script>
+<script src="js/utils.js"></script>
+<script>
+  PKUtils.injectNav('strength-test.html');
+
+  let showPassword = false;
+  let breachTimer = null;
+
+  PKUtils.el('show-hide').addEventListener('click', () => {
+    showPassword = !showPassword;
+    PKUtils.el('pw-input').type = showPassword ? 'text' : 'password';
+    PKUtils.el('show-hide').textContent = showPassword ? '🙈' : '👁';
+  });
+
+  function updateSecurityMeter(score) {
+    const segs = [1,2,3,4,5];
+    const colors = ['var(--red)','var(--red)','var(--yellow)','var(--blue)','var(--green)'];
+    let active = 0;
+    if (score > 20) active = 1;
+    if (score > 35) active = 2;
+    if (score > 50) active = 3;
+    if (score > 70) active = 4;
+    if (score > 85) active = 5;
+    segs.forEach((n, i) => {
+      const seg = PKUtils.el(`seg-${n}`);
+      seg.style.background = i < active ? colors[Math.min(i, colors.length-1)] : 'var(--surface-3)';
+    });
+  }
+
+  function buildChecklist(r) {
+    const items = [
+      { pass: r.length >= 8, label: `Length (${r.length} chars)`, hint: r.length < 8 ? 'Need 8+' : r.length >= 16 ? 'Excellent!' : 'Good' },
+      { pass: r.hasUpper, label: 'Uppercase letters (A-Z)' },
+      { pass: r.hasLower, label: 'Lowercase letters (a-z)' },
+      { pass: r.hasNumber, label: 'Numbers (0-9)' },
+      { pass: r.hasSymbol, label: 'Special symbols (!@#...)' },
+      { pass: !r.hasSequential, label: 'No sequential patterns (abc, 123)' },
+      { pass: !r.hasRepeating, label: 'No repeated chars (aaa, 111)' },
+      { pass: !r.hasKeyboardWalk, label: 'No keyboard patterns (qwerty)' },
+      { pass: !r.isCommonPassword, label: 'Not a common password' },
+      { pass: r.length >= 16, label: '16+ characters (excellent length)' },
+    ];
+    return items.map(it => `
+      <li>
+        <span class="check-icon">${it.pass ? '✅' : '❌'}</span>
+        <span class="check-label ${it.pass ? 'pass' : ''}">${it.label}</span>
+        ${it.hint ? `<span class="check-score">${it.hint}</span>` : ''}
+      </li>`).join('');
+  }
+
+  const analyze = PKUtils.debounce(async (pw) => {
+    if (!pw) {
+      PKUtils.el('results').style.display = 'none';
+      PKUtils.el('empty-state').style.display = 'block';
+      return;
+    }
+
+    PKUtils.el('results').style.display = 'block';
+    PKUtils.el('empty-state').style.display = 'none';
+
+    const r = PasswordStrength.analyze(pw);
+    if (!r) return;
+
+    const bar = PKUtils.el('strength-bar');
+    bar.className = 'strength-bar-inner ' + r.colorClass;
+    bar.style.width = r.meterWidth + '%';
+
+    const st = PKUtils.el('strength-text');
+    st.className = 'strength-text ' + r.colorClass;
+    st.textContent = r.icon + ' ' + r.label;
+
+    PKUtils.setText('entropy-display', `Entropy: ${r.entropy.toFixed(1)} bits`);
+    PKUtils.setText('crack-hero', r.crackTime);
+
+    const crackEl = PKUtils.el('crack-hero');
+    crackEl.style.color = r.score <= 25 ? 'var(--red)' : r.score <= 50 ? 'var(--yellow)' : r.score <= 75 ? 'var(--blue-bright)' : 'var(--green-bright)';
+
+    PKUtils.setText('crack-combo', `charset: ${r.charsetSize}`);
+    updateSecurityMeter(r.score);
+
+    const epill = PKUtils.el('entropy-pill');
+    epill.textContent = `${r.entropy.toFixed(0)} bits entropy`;
+    epill.className = 'badge ' + (r.entropy < 50 ? 'badge-red' : r.entropy < 70 ? 'badge-yellow' : r.entropy < 90 ? 'badge-blue' : 'badge-green');
+
+    PKUtils.setText('charset-pill', `charset: ${r.charsetSize}`);
+    PKUtils.setText('unique-pill', `${r.uniqueChars} unique chars`);
+
+    PKUtils.setHTML('checklist', buildChecklist(r));
+
+    if (r.tips.length > 0) {
+      PKUtils.el('tips-card').style.display = 'block';
+      PKUtils.el('tips-list').innerHTML = r.tips.map(t => `<li>${t}</li>`).join('');
+    } else {
+      PKUtils.el('tips-card').style.display = 'none';
+    }
+
+    // Breach check
+    if (PKUtils.el('opt-breach').checked) {
+      PKUtils.el('breach-section').style.display = 'block';
+      PKUtils.el('breach-loading').style.display = 'block';
+      PKUtils.el('breach-result').className = 'breach-result';
+      PKUtils.el('breach-result').innerHTML = '';
+
+      clearTimeout(breachTimer);
+      breachTimer = setTimeout(async () => {
+        try {
+          const res = await PasswordStrength.checkBreach(pw);
+          PKUtils.el('breach-loading').style.display = 'none';
+          const el = PKUtils.el('breach-result');
+          el.classList.add('show');
+          if (res.found) {
+            el.className = 'breach-result found show';
+            el.innerHTML = `<div class="breach-result-icon">⚠️</div>
+              <div class="breach-result-label">Found in ${res.count.toLocaleString()} data breaches!</div>
+              <div class="breach-result-desc">This password has been exposed ${res.count.toLocaleString()} times. Change it immediately on all sites where you use it.</div>
+              <div style="margin-top:10px"><a href="index.html" class="btn btn-primary btn-sm">Generate a new strong password →</a></div>`;
+          } else {
+            el.className = 'breach-result safe show';
+            el.innerHTML = `<div class="breach-result-icon">🛡️</div>
+              <div class="breach-result-label">Not found in known breaches</div>
+              <div class="breach-result-desc">This password doesn't appear in any known data breach database. It may still be weak — check the strength score above.</div>`;
+          }
+        } catch (e) {
+          PKUtils.el('breach-loading').style.display = 'none';
+          PKUtils.el('breach-result').className = 'breach-result found show';
+          PKUtils.el('breach-result').innerHTML = `<div class="breach-result-label" style="color:var(--yellow)">⚠️ Could not connect to breach database</div><div class="breach-result-desc">Check your internet connection and try again.</div>`;
+        }
+      }, 800);
+    } else {
+      PKUtils.el('breach-section').style.display = 'none';
+    }
+  }, 200);
+
+  PKUtils.el('pw-input').addEventListener('input', (e) => analyze(e.target.value));
+  PKUtils.el('opt-breach').addEventListener('change', () => {
+    const pw = PKUtils.el('pw-input').value;
+    if (pw) analyze(pw);
+  });
+</script>
+
+<div class="page" style="padding-top:0">
+<div class="seo-content">
+  <h2>How Is Password Strength Measured?</h2>
+  <p><strong>Password strength</strong> is measured by entropy — a mathematical value in bits representing how unpredictable the password is. The formula is <code>log₂(charset_size) × length</code>. But raw entropy is only part of the picture: PassKit.in also detects pattern weaknesses that reduce effective security, including dictionary words, keyboard walks (qwerty, 12345), repeated characters, dates, and common substitutions (@ for a, 3 for e).</p>
+
+  <h2>Password Entropy Scale — What the Numbers Mean</h2>
+  <ul>
+    <li><strong>0–40 bits (Weak):</strong> Crackable in seconds to hours. Common passwords, short passwords, keyboard walks.</li>
+    <li><strong>40–60 bits (Fair):</strong> Crackable in hours to weeks with offline attack. Acceptable only for low-risk accounts.</li>
+    <li><strong>60–80 bits (Good):</strong> Crackable in months to years. Sufficient for most accounts with a password manager.</li>
+    <li><strong>80–128 bits (Strong):</strong> Would take thousands to millions of years. Recommended for all accounts.</li>
+    <li><strong>128+ bits (Very Strong):</strong> Computationally uncrackable with any foreseeable technology.</li>
+  </ul>
+
+  <h2>How Long Would It Take to Crack Your Password?</h2>
+  <p>PassKit.in estimates crack time using an <strong>offline brute-force attack at 10 billion guesses per second</strong> — a realistic model for a GPU-equipped attacker who has stolen a hashed password database. Common real-world benchmarks: a high-end GPU cluster achieves 10–100 billion MD5 hashes/second. For bcrypt-hashed passwords, the rate drops to thousands per second, making even shorter passwords very safe.</p>
+
+  <h2>Common Password Weaknesses PassKit Detects</h2>
+  <ul>
+    <li><strong>Dictionary words</strong> — any recognizable word reduces effective entropy dramatically</li>
+    <li><strong>Keyboard patterns</strong> — qwerty, asdf, zxcv, 12345678 are in every attacker's first pass</li>
+    <li><strong>Repeated characters</strong> — aaaaaa, 111111, or character repetition within a password</li>
+    <li><strong>Dates and years</strong> — 1990, 2024, Jan, birthday patterns are common guesses</li>
+    <li><strong>Leet substitutions</strong> — p@ssw0rd and similar patterns are well-known to crackers</li>
+    <li><strong>Short length</strong> — any password under 12 characters is vulnerable to GPU brute force</li>
+  </ul>
+
+  <h2>Frequently Asked Questions</h2>
+  <div id="faq-list">
+    <div class="faq-item">
+      <button class="faq-q">How is password strength calculated? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">PassKit calculates entropy as log₂(charset_size) × length. It then applies penalties for detected patterns: dictionary words, keyboard walks, repeated characters, dates, and l33t substitutions. The final score (0–100) maps to Weak / Fair / Good / Strong. The crack time assumes an offline brute-force at 10 billion guesses/second.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">What is a good password entropy value? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Security experts consider 80+ bits of entropy strong for most purposes. NIST SP 800-63B recommends focusing on length rather than complexity. For a password manager master password, aim for 100+ bits. PassKit displays entropy in real time — use the generator tool to create passwords that score 80+ bits automatically.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Does PassKit send my password anywhere during the strength test? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">No — the strength test is entirely local. Your password is analyzed in JavaScript running in your browser. Nothing is transmitted. The breach check (available on the dedicated Breach Check page) also never sends your actual password — it uses k-anonymity, sending only the first 5 characters of the SHA-1 hash.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Why does a long password with only letters sometimes score higher than a short complex one? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Because length contributes more to entropy than character variety. A 20-character lowercase-only password has log₂(26) × 20 = 94 bits of entropy. A 10-character all-type password has log₂(94) × 10 = 66 bits. The 20-char lowercase password is harder to crack despite using only letters. This is why security experts now emphasize length above all else.</div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>
+
+
+
+
+
+

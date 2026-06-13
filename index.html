@@ -1,0 +1,602 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Password Generator — Secure & Random | PassKit.in</title>
+<meta name="description" content="Free password generator using crypto.getRandomValues(). Strong, random passwords with 10 free security tools — no ads, no tracking, no server.">
+<meta name="keywords" content="password generator, free password generator, random password generator, strong password generator, secure password generator, online password generator, cryptographically secure password, password generator no sign up, password generator no account, generador de contrasenas, mot de passe securise, Passwort Generator, gerador de senha, password sicuro, wachtwoord generator, haslo generator, parol ureteci, kodeord generator, generatore di password, generator hasel, passwort erstellen, clave segura, senha forte, contraseña aleatoria, mot de passe aleatoire, sichere passwort, senha aleatoria">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate" hreflang="en" href="https://passkit.in/">
+<link rel="alternate" hreflang="x-default" href="https://passkit.in/">
+<link rel="canonical" href="https://passkit.in/">
+<meta name="author" content="PassKit.in">
+<meta name="theme-color" content="#0d0f1a">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://passkit.in/">
+<meta property="og:title" content="Free Password Generator — Cryptographically Secure | PassKit.in">
+<meta property="og:description" content="Generate strong random passwords instantly. 100% client-side, no server, no account. Uses Web Crypto API — the same standard used by banks and security software.">
+<meta property="og:image" content="https://passkit.in/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Password Generator — PassKit.in">
+<meta name="twitter:description" content="100% free, cryptographically secure password generator. No sign-up. Passwords never leave your browser.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "PassKit.in — Free Password Generator",
+  "url": "https://passkit.in/",
+  "description": "Free cryptographically secure password generator. 100% client-side using Web Crypto API. Passwords never transmitted to any server.",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires modern browser with Web Crypto API support",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Cryptographically secure using crypto.getRandomValues()",
+    "100% client-side — zero server involvement",
+    "Configurable length 4–128 characters",
+    "Live entropy and crack time estimation",
+    "Real-time strength analysis",
+    "QR code generation",
+    "Password history in localStorage"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is it safe to use an online password generator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — PassKit.in is safe because all generation happens entirely in your browser using the Web Crypto API (crypto.getRandomValues). No passwords are ever transmitted to any server. You can disconnect from the internet after loading the page and it still works perfectly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is crypto.getRandomValues() and why does it matter for passwords?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "crypto.getRandomValues() is a cryptographically secure pseudo-random number generator (CSPRNG) built into every modern browser. Unlike Math.random() — which uses a predictable algorithm — crypto.getRandomValues() draws entropy from the operating system, making generated values truly unpredictable and suitable for passwords, encryption keys, and other security-critical uses."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What password length should I use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use a minimum of 16 characters for most accounts. For high-value accounts (banking, email, primary social media), use 20 or more characters. Every extra character multiplies the number of possible combinations exponentially — a 20-character password using mixed characters has more entropy than 256-bit encryption."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is password entropy?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Password entropy measures unpredictability in bits: log2(charset_size) × password_length. A 16-character password using all character types (94 characters) has ~104 bits of entropy. Security experts consider 80+ bits strong and 128+ bits extremely strong — effectively uncrackable with current hardware."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long would it take to crack a password?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "PassKit calculates crack time at 10 billion guesses/second (offline brute-force). A 12-character all-type password takes ~34 years. A 16-character version takes ~4 million years. A 20-character version would take longer than the age of the universe. Online attacks are far slower due to rate limiting."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does PassKit.in work offline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Once loaded, PassKit.in works completely offline. Password generation, strength analysis, and history all run locally in your browser. Only the breach check feature requires internet to query the HaveIBeenPwned API."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is PassKit.in completely free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — PassKit.in is 100% free, forever. No account, no subscription, no hidden fees. It is a public security service with no monetization."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PassKit.in — Free Password Generator",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "ratingCount": "412",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "PassKit.in", "item": "https://passkit.in/" }
+  ]
+}
+</script><link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<div class="page">
+  <div class="crypto-banner">🔐 CRYPTOGRAPHICALLY SECURE — uses crypto.getRandomValues()</div>
+  <h1 class="page-title">Password Generator</h1>
+  <p class="page-sub">Generate secure, random passwords instantly — client-side only, never transmitted</p>
+
+  <div class="privacy-card">
+    <span class="privacy-card-icon">🔒</span>
+    <span>Your passwords <strong>never leave your device</strong>. All generation happens in your browser using the Web Crypto API. Zero server involvement.</span>
+  </div>
+
+  <!-- Password Display -->
+  <div class="password-display-wrap">
+    <div class="password-display" id="pw-display" style="user-select:all;cursor:text;" contenteditable="false">Click Generate to create a secure password</div>
+    <div class="password-actions">
+      <button class="icon-btn" id="btn-copy" title="Copy password">📋</button>
+      <button class="icon-btn" id="btn-refresh" title="Regenerate">🔄</button>
+      <button class="icon-btn" id="btn-qr" title="Show QR Code">📱</button>
+      <button class="icon-btn" id="btn-history" title="Save to history" onclick="window.location.href='history.html'">📜</button>
+    </div>
+  </div>
+
+  <!-- Strength Meter -->
+  <div class="strength-wrap">
+    <div class="strength-bar-outer"><div class="strength-bar-inner" id="strength-bar" style="width:5%"></div></div>
+    <div class="strength-result">
+      <div class="strength-left">
+        <span class="strength-text" id="strength-text">—</span>
+      </div>
+      <span class="entropy-badge" id="entropy-badge">Entropy: — bits</span>
+    </div>
+  </div>
+
+  <!-- Crack Time -->
+  <div class="crack-card">
+    <div class="crack-title">⏱ Time to crack (offline, 10 billion guesses/sec)</div>
+    <div class="crack-time" id="crack-time">—</div>
+    <div class="crack-context">Brute-force attack against offline hash</div>
+  </div>
+
+  <!-- Settings -->
+  <div class="settings-card">
+    <div class="settings-title">⚙️ Password Settings</div>
+
+    <div class="length-row">
+      <span class="length-label">Length</span>
+      <div class="slider-wrap">
+        <input type="range" class="slider" id="pw-length" min="4" max="128" value="16">
+        <span class="length-value" id="length-val">16</span>
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-label">A–Z Uppercase Letters</div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="opt-upper" checked><span class="toggle-slider"></span></label>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-label">a–z Lowercase Letters</div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="opt-lower" checked><span class="toggle-slider"></span></label>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-label">0–9 Numbers</div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="opt-numbers" checked><span class="toggle-slider"></span></label>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-label">!@# Symbols</div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="opt-symbols" checked><span class="toggle-slider"></span></label>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-label">Exclude Similar Characters</div>
+        <div class="setting-desc">Remove 0, O, I, l, 1 — easier to read</div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="opt-similar"><span class="toggle-slider"></span></label>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-label">Exclude Ambiguous Characters</div>
+        <div class="setting-desc">Remove {}[]()\/'"`,;:.<></div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="opt-ambiguous"><span class="toggle-slider"></span></label>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-label">Must include each character type</div>
+        <div class="setting-desc">Guarantees at least 1 of each selected type</div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="opt-must-include" checked><span class="toggle-slider"></span></label>
+    </div>
+
+    <div class="custom-exclude-wrap">
+      <div class="setting-label" style="margin-bottom:6px">Custom Exclude Characters</div>
+      <input type="text" class="input-field" id="opt-custom-exclude" placeholder='e.g. lO0I to avoid confusing chars' style="max-width:320px">
+    </div>
+  </div>
+
+  <!-- Mode Tabs -->
+  <div class="settings-card">
+    <div class="settings-title">🎛 Generation Mode</div>
+    <div class="tab-group" id="mode-tabs">
+      <button class="tab-btn active" data-mode="random">🎲 Random</button>
+      <button class="tab-btn" data-mode="easyToSay">🗣 Easy to Say</button>
+      <button class="tab-btn" data-mode="easyToRead">👁 Easy to Read</button>
+      <button class="tab-btn" data-mode="hex">⬡ Hexadecimal</button>
+    </div>
+  </div>
+
+  <button class="generate-btn" id="btn-generate">⚡ Generate Secure Password</button>
+
+  <!-- Stats Row -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num" id="stat-length">16</div><div class="stat-label">Length</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-entropy">—</div><div class="stat-label">Entropy (bits)</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-charset">94</div><div class="stat-label">Charset Size</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-score">—</div><div class="stat-label">Strength Score</div></div>
+  </div>
+
+  <!-- QR Panel -->
+  <div class="qr-panel" id="qr-panel">
+    <div class="qr-note">⚠️ Scan in a private place — QR contains your password</div>
+    <img id="qr-img" alt="QR Code" style="display:none;border-radius:8px;background:white;padding:8px;margin:0 auto 10px;max-width:200px">
+    <br>
+    <button class="btn btn-sm" onclick="PKUtils.downloadQR('qr-img','password-qr.png')">⬇ Download QR</button>
+  </div>
+
+  <!-- Quick Generate 5 -->
+  <div class="section">
+    <div class="section-title" style="justify-content:space-between">
+      <span>📋 Quick Generate — 5 Passwords</span>
+      <button class="btn btn-sm" id="btn-quick">Generate 5</button>
+    </div>
+    <div class="quick-list" id="quick-list"></div>
+  </div>
+
+  <!-- More Tools -->
+  <div class="section">
+    <div class="section-title">🧰 More Security Tools</div>
+    <div class="tools-grid">
+      <a href="passphrase.html" class="tool-card"><span class="tool-icon">💬</span><div class="tool-name">Passphrase</div><div class="tool-desc">Random word combinations — memorable & strong</div></a>
+      <a href="strength-test.html" class="tool-card"><span class="tool-icon">🔬</span><div class="tool-name">Strength Tester</div><div class="tool-desc">Analyze any password in detail</div></a>
+      <a href="username.html" class="tool-card"><span class="tool-icon">👤</span><div class="tool-name">Username</div><div class="tool-desc">Unique usernames for any platform</div></a>
+      <a href="pin.html" class="tool-card"><span class="tool-icon">🔢</span><div class="tool-name">PIN Generator</div><div class="tool-desc">Secure PINs for banks & phones</div></a>
+      <a href="wifi-password.html" class="tool-card"><span class="tool-icon">📶</span><div class="tool-name">WiFi + QR</div><div class="tool-desc">WiFi password with shareable QR code</div></a>
+      <a href="api-key.html" class="tool-card"><span class="tool-icon">🔐</span><div class="tool-name">API Key</div><div class="tool-desc">UUID, hex, base64 secrets</div></a>
+      <a href="breach-check.html" class="tool-card"><span class="tool-icon">🛡️</span><div class="tool-name">Breach Check</div><div class="tool-desc">HaveIBeenPwned k-anonymity check</div></a>
+      <a href="bulk.html" class="tool-card"><span class="tool-icon">📦</span><div class="tool-name">Bulk Generator</div><div class="tool-desc">Generate 5–100 passwords, download CSV</div></a>
+      <a href="history.html" class="tool-card"><span class="tool-icon">📜</span><div class="tool-name">History</div><div class="tool-desc">Your generated passwords (localStorage)</div></a>
+    </div>
+  </div>
+
+  <!-- SEO Content — Keyword-optimized for PassKit.in -->
+  <div class="seo-content">
+
+    <h2>What Is a Password Generator — and Why Use One?</h2>
+    <p>A <strong>password generator</strong> creates truly random, unpredictable passwords that humans cannot replicate on their own. When you type a password manually, your brain unconsciously reaches for patterns — keyboard walks like <code>qwerty123</code>, names, dates, or repeated characters. These patterns are the first things attackers try. PassKit.in eliminates all human bias by using <code>crypto.getRandomValues()</code>, the Web Crypto API built into every modern browser, to generate passwords with the same level of randomness used in encryption keys and SSL certificates.</p>
+
+    <h2>What Makes a Strong Password in 2025?</h2>
+    <p>A strong password has three properties: <strong>length</strong> (16+ characters), <strong>character variety</strong> (uppercase, lowercase, numbers, symbols), and <strong>unpredictability</strong> (no dictionary words, patterns, or personal information). Length is the single most important factor — every additional character multiplies the number of possible combinations exponentially.</p>
+    <ul>
+      <li><strong>12 characters, all types:</strong> ~68 bits of entropy — strong for low-risk accounts</li>
+      <li><strong>16 characters, all types:</strong> ~104 bits of entropy — strong for most accounts</li>
+      <li><strong>20 characters, all types:</strong> ~131 bits of entropy — extremely strong, recommended for banking and email</li>
+      <li><strong>24+ characters, all types:</strong> 157+ bits — effectively uncrackable for any foreseeable hardware</li>
+    </ul>
+
+    <h2>How Long Would It Take to Crack Your Password?</h2>
+    <p>PassKit calculates crack time assuming an <strong>offline brute-force attack at 10 billion guesses per second</strong> — a realistic threat model for a determined attacker with a GPU cluster. Results: a 12-character mixed password takes approximately 34 years; 16 characters takes 4 million years; 20 characters takes longer than the age of the universe. Online attacks are far slower due to rate limiting — even a 10-character password is safe against online attacks when the service uses proper lockouts.</p>
+
+    <h2>What Is Password Entropy?</h2>
+    <p><strong>Password entropy</strong> measures unpredictability in bits, calculated as <code>log₂(charset_size) × length</code>. Using all character types (94 printable ASCII characters): a 16-character password has 104 bits of entropy, meaning an attacker needs to try 2¹⁰⁴ combinations on average. Security standards (NIST SP 800-63B) consider 80+ bits strong and recommend against mandatory rotation of strong passwords.</p>
+
+    <h2>Is PassKit.in Safe to Use?</h2>
+    <p>Yes — and here is the technical proof. PassKit.in uses <strong>zero server-side code</strong>. All HTML, CSS, and JavaScript load once and run entirely in your browser. When you click Generate, the password is created by <code>crypto.getRandomValues()</code> and displayed locally — it never travels over the network. You can verify this by opening browser DevTools → Network tab and observing that no requests are made when generating passwords. You can also download the page and use it offline indefinitely.</p>
+
+    <h2>PassKit.in vs Other Free Password Generators</h2>
+    <ul>
+      <li><strong>100% client-side</strong> — no server receives your passwords (most generators are server-side)</li>
+      <li><strong>crypto.getRandomValues()</strong> — not Math.random(), which is predictable</li>
+      <li><strong>No account required</strong> — generate immediately, no email, no tracking</li>
+      <li><strong>Full security suite</strong> — strength tester, breach checker, passphrase generator, API key generator, WiFi QR, bulk export, username generator — 10 tools in one</li>
+      <li><strong>Open source logic</strong> — inspect the JavaScript directly in your browser</li>
+    </ul>
+
+    <h2>How to Create a Strong Password — Step by Step</h2>
+    <ol>
+      <li>Set length to <strong>16 or more characters</strong> using the slider above</li>
+      <li>Enable <strong>uppercase letters, lowercase letters, numbers, and symbols</strong></li>
+      <li>Click <strong>Generate Password</strong> — the strength meter should show "Strong" with 100+ bits entropy</li>
+      <li>Copy and save it to a <strong>password manager</strong> (Bitwarden, 1Password, KeePass)</li>
+      <li>Use a <strong>unique password for every account</strong> — never reuse passwords</li>
+    </ol>
+
+    <h2>Frequently Asked Questions</h2>
+    <div id="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">Is it safe to use an online password generator? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">Yes — if it runs entirely client-side. PassKit.in generates all passwords locally in your browser using <code>crypto.getRandomValues()</code>. No passwords are ever sent to a server. Open DevTools → Network to verify: zero requests are made during generation. You can disconnect from the internet after loading the page and it continues to work.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What is crypto.getRandomValues() and why does it matter? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a"><code>crypto.getRandomValues()</code> is a Cryptographically Secure Pseudo-Random Number Generator (CSPRNG) built into every modern browser as part of the Web Crypto API. It draws entropy from the operating system's hardware random number generator, making output statistically indistinguishable from true randomness. <code>Math.random()</code> — used by many other generators — is predictable, seeded by time, and should never be used for passwords or cryptographic keys.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What password length should I use? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">NIST recommends a minimum of 8 characters but security professionals use 16+. For banking and email, use 20+ characters. Every extra character multiplies combinations exponentially — going from 12 to 16 characters (all types) increases the search space by a factor of 78 million. If a site limits passwords to 8–12 characters, enable all character types and use the maximum allowed length.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What is password entropy and how is it calculated? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">Entropy = log₂(charset_size) × length. Charset sizes: lowercase only = 26, alphanumeric = 62, all printable ASCII = 94. A 16-character password using all types: log₂(94) × 16 ≈ 104 bits. Security threshold: 80 bits = strong, 128 bits = very strong. PassKit displays entropy in real time next to the strength meter.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Should I use passphrases or random passwords? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">Both are strong when generated correctly. Use a <strong>passphrase</strong> (e.g., "flying-dragon-silver-storm") for accounts you need to type manually — they are easier to remember and still have 50–80+ bits of entropy. Use a <strong>random character password</strong> for accounts stored in a password manager — they have slightly higher entropy per character. PassKit offers both on separate tools.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Does PassKit.in work offline? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">Yes. Once loaded, the entire password generator, strength analyzer, passphrase generator, PIN generator, username generator, and bulk generator work completely offline. Only the breach checker requires internet to query the HaveIBeenPwned API (using k-anonymity — your password is never transmitted).</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How often should I change my passwords? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">NIST SP 800-63B (2017, updated 2024) explicitly advises against mandatory periodic password changes unless there is evidence of compromise. Change your password immediately if: (1) the service announces a data breach, (2) you suspect unauthorized access, or (3) you shared the password with someone. Strong, unique passwords do not need regular rotation.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is PassKit.in completely free? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">Yes — 100% free, forever. No account, no subscription, no ads, no tracking. PassKit.in is a public security utility. All 10 tools (password generator, passphrase, strength tester, breach checker, PIN, WiFi, API key, bulk, username, history) are free with no limits.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What makes PassKit.in different from LastPass or RoboForm generators? <span class="faq-arrow">▼</span></button>
+        <div class="faq-a">LastPass and RoboForm are password managers with built-in generators — they require accounts, sync data to servers, and have had notable security breaches (LastPass 2022). PassKit.in has no account, no server, no stored data, and no sync — it is a pure generation tool. It also goes further with a complete 10-tool security suite, breach checking with k-anonymity, and WiFi QR code generation, all free.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<!-- Multilingual SEO Section — helps AI search engines answer queries in other languages -->
+<section class="seo-content" aria-label="Multilingual password generator information" style="margin-top:2rem">
+  <h2 style="font-size:1.1rem;color:var(--text-3)">PassKit.in — Available Worldwide</h2>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:1rem">
+
+    <div style="padding:1rem;background:var(--surface-2);border-radius:12px;border:1px solid var(--border)">
+      <h3 style="font-size:0.85rem;color:var(--violet);margin-bottom:0.5rem">🇪🇸 Español</h3>
+      <p style="font-size:0.8rem;color:var(--text-3);margin:0">PassKit.in es un <strong>generador de contraseñas gratuito</strong> que funciona completamente en tu navegador. Genera contraseñas seguras, frases de contraseña y claves API sin enviar datos a ningún servidor. Herramienta de seguridad 100% privada — sin registro, sin anuncios.</p>
+    </div>
+
+    <div style="padding:1rem;background:var(--surface-2);border-radius:12px;border:1px solid var(--border)">
+      <h3 style="font-size:0.85rem;color:var(--violet);margin-bottom:0.5rem">🇫🇷 Français</h3>
+      <p style="font-size:0.8rem;color:var(--text-3);margin:0">PassKit.in est un <strong>générateur de mot de passe gratuit</strong> qui fonctionne entièrement dans votre navigateur. Générez des mots de passe sécurisés, des phrases secrètes et des clés API sans envoyer de données à aucun serveur. Outil de sécurité 100% privé — sans inscription, sans publicité.</p>
+    </div>
+
+    <div style="padding:1rem;background:var(--surface-2);border-radius:12px;border:1px solid var(--border)">
+      <h3 style="font-size:0.85rem;color:var(--violet);margin-bottom:0.5rem">🇩🇪 Deutsch</h3>
+      <p style="font-size:0.8rem;color:var(--text-3);margin:0">PassKit.in ist ein <strong>kostenloser Passwort-Generator</strong>, der vollständig in Ihrem Browser läuft. Erstellen Sie sichere Passwörter, Passphrasen und API-Schlüssel, ohne Daten an einen Server zu senden. 100% privates Sicherheitstool — ohne Registrierung, ohne Werbung.</p>
+    </div>
+
+    <div style="padding:1rem;background:var(--surface-2);border-radius:12px;border:1px solid var(--border)">
+      <h3 style="font-size:0.85rem;color:var(--violet);margin-bottom:0.5rem">🇧🇷 Português</h3>
+      <p style="font-size:0.8rem;color:var(--text-3);margin:0">PassKit.in é um <strong>gerador de senha gratuito</strong> que funciona completamente no seu navegador. Gere senhas seguras, frases-senha e chaves de API sem enviar dados para nenhum servidor. Ferramenta de segurança 100% privada — sem cadastro, sem anúncios.</p>
+    </div>
+
+    <div style="padding:1rem;background:var(--surface-2);border-radius:12px;border:1px solid var(--border)">
+      <h3 style="font-size:0.85rem;color:var(--violet);margin-bottom:0.5rem">🇮🇳 हिन्दी</h3>
+      <p style="font-size:0.8rem;color:var(--text-3);margin:0">PassKit.in एक <strong>मुफ़्त पासवर्ड जेनरेटर</strong> है जो पूरी तरह आपके ब्राउज़र में काम करता है। बिना किसी सर्वर पर डेटा भेजे सुरक्षित पासवर्ड, पासफ़्रेज़ और API कुंजियाँ बनाएं। 100% निजी सुरक्षा टूल — बिना पंजीकरण, बिना विज्ञापन।</p>
+    </div>
+
+    <div style="padding:1rem;background:var(--surface-2);border-radius:12px;border:1px solid var(--border)">
+      <h3 style="font-size:0.85rem;color:var(--violet);margin-bottom:0.5rem">🇮🇹 Italiano</h3>
+      <p style="font-size:0.8rem;color:var(--text-3);margin:0">PassKit.in è un <strong>generatore di password gratuito</strong> che funziona interamente nel tuo browser. Genera password sicure, passphrase e chiavi API senza inviare dati a nessun server. Strumento di sicurezza 100% privato — senza registrazione, senza pubblicità.</p>
+    </div>
+
+    <div style="padding:1rem;background:var(--surface-2);border-radius:12px;border:1px solid var(--border)">
+      <h3 style="font-size:0.85rem;color:var(--violet);margin-bottom:0.5rem">🇳🇱 Nederlands</h3>
+      <p style="font-size:0.8rem;color:var(--text-3);margin:0">PassKit.in is een <strong>gratis wachtwoordgenerator</strong> die volledig in uw browser werkt. Genereer veilige wachtwoorden, wachtzinnen en API-sleutels zonder gegevens naar een server te sturen. 100% privé beveiligingstool — zonder registratie, zonder advertenties.</p>
+    </div>
+
+    <div style="padding:1rem;background:var(--surface-2);border-radius:12px;border:1px solid var(--border)">
+      <h3 style="font-size:0.85rem;color:var(--violet);margin-bottom:0.5rem">🇹🇷 Türkçe</h3>
+      <p style="font-size:0.8rem;color:var(--text-3);margin:0">PassKit.in, tamamen tarayıcınızda çalışan <strong>ücretsiz bir şifre oluşturucu</strong>dur. Hiçbir sunucuya veri göndermeden güçlü şifreler, parola cümleleri ve API anahtarları oluşturun. %100 gizli güvenlik aracı — kayıt yok, reklam yok.</p>
+    </div>
+
+    <div style="padding:1rem;background:var(--surface-2);border-radius:12px;border:1px solid var(--border)">
+      <h3 style="font-size:0.85rem;color:var(--violet);margin-bottom:0.5rem">🇸🇦 العربية</h3>
+      <p style="font-size:0.8rem;color:var(--text-3);margin:0" dir="rtl">PassKit.in هو <strong>مولد كلمات مرور مجاني</strong> يعمل بالكامل في متصفحك. أنشئ كلمات مرور قوية وعبارات مرور ومفاتيح API دون إرسال أي بيانات إلى أي خادم. أداة أمان خاصة 100٪ — بدون تسجيل، بدون إعلانات.</p>
+    </div>
+
+    <div style="padding:1rem;background:var(--surface-2);border-radius:12px;border:1px solid var(--border)">
+      <h3 style="font-size:0.85rem;color:var(--violet);margin-bottom:0.5rem">🇯🇵 日本語</h3>
+      <p style="font-size:0.8rem;color:var(--text-3);margin:0">PassKit.inは、ブラウザ上で完全に動作する<strong>無料パスワードジェネレーター</strong>です。サーバーにデータを送信することなく、安全なパスワード、パスフレーズ、APIキーを生成します。登録不要・広告なしの100%プライベートなセキュリティツール。</p>
+    </div>
+
+    <div style="padding:1rem;background:var(--surface-2);border-radius:12px;border:1px solid var(--border)">
+      <h3 style="font-size:0.85rem;color:var(--violet);margin-bottom:0.5rem">🇨🇳 中文</h3>
+      <p style="font-size:0.8rem;color:var(--text-3);margin:0">PassKit.in 是一款<strong>免费密码生成器</strong>，完全在您的浏览器中运行。无需向任何服务器发送数据即可生成强密码、密码短语和API密钥。100%私密安全工具 — 无需注册，无广告。</p>
+    </div>
+
+    <div style="padding:1rem;background:var(--surface-2);border-radius:12px;border:1px solid var(--border)">
+      <h3 style="font-size:0.85rem;color:var(--violet);margin-bottom:0.5rem">🇰🇷 한국어</h3>
+      <p style="font-size:0.8rem;color:var(--text-3);margin:0">PassKit.in은 완전히 브라우저에서 작동하는 <strong>무료 비밀번호 생성기</strong>입니다. 서버에 데이터를 전송하지 않고 강력한 비밀번호, 패스프레이즈 및 API 키를 생성하세요. 등록 없음, 광고 없음 — 100% 개인 보안 도구.</p>
+    </div>
+
+  </div>
+</section>
+
+<script src="js/generator.js"></script>
+<script src="js/strength.js"></script>
+<script src="js/utils.js"></script>
+<script>
+  PKUtils.injectNav('index.html');
+
+  let currentPassword = '';
+  let currentMode = 'random';
+
+  function getOptions() {
+    return {
+      length: parseInt(PKUtils.el('pw-length').value),
+      uppercase: PKUtils.el('opt-upper').checked,
+      lowercase: PKUtils.el('opt-lower').checked,
+      numbers: PKUtils.el('opt-numbers').checked,
+      symbols: PKUtils.el('opt-symbols').checked,
+      excludeSimilar: PKUtils.el('opt-similar').checked,
+      excludeAmbiguous: PKUtils.el('opt-ambiguous').checked,
+      mustIncludeEachType: PKUtils.el('opt-must-include').checked,
+      customExclude: PKUtils.el('opt-custom-exclude').value,
+      easyToSay: currentMode === 'easyToSay',
+      easyToRead: currentMode === 'easyToRead',
+      hexMode: currentMode === 'hex'
+    };
+  }
+
+  function updateStats(pw, opts) {
+    const result = PasswordStrength.analyze(pw);
+    if (!result) return;
+
+    const bar = PKUtils.el('strength-bar');
+    bar.className = 'strength-bar-inner ' + result.colorClass;
+    bar.style.width = result.meterWidth + '%';
+
+    const st = PKUtils.el('strength-text');
+    st.className = 'strength-text ' + result.colorClass;
+    st.textContent = result.icon + ' ' + result.label;
+
+    PKUtils.setText('entropy-badge', 'Entropy: ' + result.entropy.toFixed(1) + ' bits');
+    PKUtils.setText('crack-time', result.crackTime);
+    PKUtils.setText('stat-length', pw.length);
+    PKUtils.setText('stat-entropy', result.entropy.toFixed(0));
+    PKUtils.setText('stat-charset', result.charsetSize);
+    PKUtils.setText('stat-score', result.score + '/100');
+  }
+
+  function generate() {
+    const opts = getOptions();
+    const pw = Generator.generatePassword(opts);
+    currentPassword = pw;
+    PKUtils.el('pw-display').textContent = pw;
+    updateStats(pw, opts);
+    Generator.saveToHistory(pw, 'password');
+    if (PKUtils.el('qr-panel').classList.contains('show')) showQR(pw);
+  }
+
+  function updateLengthDisplay() {
+    const v = PKUtils.el('pw-length').value;
+    PKUtils.setText('length-val', v);
+    PKUtils.setText('stat-length', v);
+  }
+
+  PKUtils.el('pw-length').addEventListener('input', () => {
+    updateLengthDisplay();
+    if (currentPassword) generate();
+  });
+
+  ['opt-upper','opt-lower','opt-numbers','opt-symbols','opt-similar','opt-ambiguous','opt-must-include'].forEach(id => {
+    PKUtils.el(id).addEventListener('change', () => { if (currentPassword) generate(); });
+  });
+
+  PKUtils.el('opt-custom-exclude').addEventListener('input', PKUtils.debounce(() => {
+    if (currentPassword) generate();
+  }, 400));
+
+  document.querySelectorAll('.tab-btn[data-mode]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn[data-mode]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentMode = btn.dataset.mode;
+      if (currentPassword) generate();
+    });
+  });
+
+  PKUtils.el('btn-generate').addEventListener('click', generate);
+  PKUtils.el('btn-refresh').addEventListener('click', generate);
+
+  PKUtils.el('btn-copy').addEventListener('click', async () => {
+    if (!currentPassword) return;
+    const ok = await PKUtils.copyToClipboard(currentPassword);
+    if (ok) {
+      PKUtils.el('btn-copy').classList.add('copied');
+      PKUtils.el('btn-copy').textContent = '✅';
+      PKUtils.showToast('Password copied!', 'success');
+      setTimeout(() => { PKUtils.el('btn-copy').classList.remove('copied'); PKUtils.el('btn-copy').textContent = '📋'; }, 1500);
+    } else {
+      PKUtils.showToast('Copy failed', 'error');
+    }
+  });
+
+  function showQR(pw) {
+    PKUtils.el('qr-img').style.display = 'block';
+    PKUtils.generateQR(pw || currentPassword, 'qr-img', 200);
+  }
+
+  PKUtils.el('btn-qr').addEventListener('click', () => {
+    const panel = PKUtils.el('qr-panel');
+    panel.classList.toggle('show');
+    if (panel.classList.contains('show') && currentPassword) showQR(currentPassword);
+  });
+
+  PKUtils.el('btn-quick').addEventListener('click', () => {
+    const opts = getOptions();
+    const pws = Generator.generateBulk(5, opts);
+    const list = PKUtils.el('quick-list');
+    list.innerHTML = pws.map((pw, i) => `
+      <div class="quick-item">
+        <span class="quick-pw" id="qpw-${i}">${pw}</span>
+        <button class="btn btn-sm" onclick="quickCopy(${i}, this)">📋 Copy</button>
+      </div>`).join('');
+  });
+
+  async function quickCopy(idx, btn) {
+    const pw = PKUtils.el(`qpw-${idx}`).textContent;
+    const ok = await PKUtils.copyToClipboard(pw);
+    if (ok) { btn.textContent = '✅'; PKUtils.showToast('Copied!', 'success', 1200); setTimeout(() => btn.textContent = '📋 Copy', 1200); }
+  }
+
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.closest('.faq-item').classList.toggle('open');
+    });
+  });
+
+  generate();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+

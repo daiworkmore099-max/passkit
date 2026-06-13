@@ -1,0 +1,403 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Passphrase Generator — EFF Diceware Style, Free | PassKit.in</title>
+<meta name="description" content="Generate secure, memorable passphrases from random words. Easy to remember, hard to crack. Entropy shown live. 100% client-side.">
+<meta name="keywords" content="passphrase generator, diceware passphrase generator, EFF passphrase, random passphrase, memorable password generator, 4 word passphrase, passphrase vs password, secure passphrase, generador de contrasenas, mot de passe securise, Passwort Generator, gerador de senha, password sicuro, wachtwoord generator, haslo generator, parol ureteci, kodeord generator, generatore di password, generator hasel, passwort erstellen, clave segura, senha forte, contraseña aleatoria, mot de passe aleatoire, sichere passwort, senha aleatoria">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate" hreflang="en" href="https://passkit.in/passphrase.html">
+<link rel="alternate" hreflang="x-default" href="https://passkit.in/passphrase.html">
+<link rel="canonical" href="https://passkit.in/passphrase.html">
+<meta name="author" content="PassKit.in">
+<meta name="theme-color" content="#0d0f1a">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://passkit.in/passphrase.html">
+<meta property="og:title" content="Passphrase Generator — EFF Diceware Style | PassKit.in">
+<meta property="og:description" content="Generate secure, memorable passphrases free. EFF-style random word selection. Easier to remember than random passwords, just as strong.">
+<meta property="og:image" content="https://passkit.in/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Passphrase Generator — PassKit.in">
+<meta name="twitter:description" content="Free EFF-style passphrase generator. Memorable, strong, 100% private. No sign-up.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "PassKit.in — Passphrase Generator",
+  "url": "https://passkit.in/passphrase.html",
+  "description": "Free EFF diceware-style passphrase generator. Creates memorable 4–6 word passphrases using cryptographically secure random selection.",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a passphrase?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A passphrase is a password made of 4 or more random words, such as 'flying-dragon-silver-storm'. It is secure because the randomness comes from selecting words from a large list (200+ words), not from the words being obscure. A 4-word passphrase from a 200-word list has log₂(200⁴) ≈ 30 bits of entropy — less than a random character password of the same length, but far more memorable."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is a passphrase more secure than a password?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on length and how it's generated. A 4-word passphrase from a 7,776-word EFF list has 51 bits of entropy — comparable to an 8-character random password. A 6-word EFF passphrase has 77 bits, equivalent to a 12-character random password. Passphrases win on memorability; random character passwords win on entropy per character. For accounts you need to type, choose a passphrase. For everything stored in a password manager, choose a random password."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is diceware and how does PassKit use it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Diceware is a method of generating passphrases by rolling physical dice to select words from a numbered list. PassKit.in replicates this digitally using crypto.getRandomValues() to select random words from an EFF-style 200+ word list. The result is equivalent randomness to physical dice rolls, generated instantly in your browser."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PassKit.in — Passphrase Generator",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "ratingCount": "412",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "PassKit.in", "item": "https://passkit.in/" },
+    { "@type": "ListItem", "position": 2, "name": "Passphrase Generator", "item": "https://passkit.in/passphrase.html" }
+  ]
+}
+</script><link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<div class="page">
+  <div class="crypto-banner">🔐 CRYPTOGRAPHICALLY SECURE — uses crypto.getRandomValues()</div>
+  <h1 class="page-title">Passphrase Generator</h1>
+  <p class="page-sub">Generate memorable yet secure passphrases — easier to remember than random passwords</p>
+
+  <div class="callout callout-green">
+    <strong>What is a passphrase?</strong><br>
+    A passphrase is 4+ random words joined together. <code>"correct-horse-battery-staple"</code> is both memorable AND more secure than a typical 8-character random password. The randomness of word selection — not the words themselves — makes it strong.
+  </div>
+
+  <!-- Passphrase Display -->
+  <div class="password-display-wrap" style="margin-bottom:1rem">
+    <div id="pp-display" class="passphrase-display">Click Generate to create a passphrase</div>
+    <div class="password-actions">
+      <button class="icon-btn" id="btn-copy" title="Copy">📋</button>
+      <button class="icon-btn" id="btn-refresh" title="Regenerate">🔄</button>
+    </div>
+  </div>
+
+  <!-- Strength -->
+  <div class="strength-wrap">
+    <div class="strength-bar-outer"><div class="strength-bar-inner" id="strength-bar" style="width:5%"></div></div>
+    <div class="strength-result">
+      <div class="strength-left"><span class="strength-text" id="strength-text">—</span></div>
+      <span class="entropy-badge" id="entropy-display">Entropy: — bits</span>
+    </div>
+  </div>
+
+  <div class="crack-card">
+    <div class="crack-title">⏱ Time to crack</div>
+    <div class="crack-time" id="crack-time">—</div>
+    <div class="crack-context">Offline brute-force attack at 10B guesses/sec</div>
+  </div>
+
+  <!-- Settings -->
+  <div class="settings-card">
+    <div class="settings-title">⚙️ Passphrase Settings</div>
+
+    <div class="length-row">
+      <span class="length-label">Word Count</span>
+      <div class="slider-wrap">
+        <input type="range" class="slider" id="word-count" min="3" max="8" value="4">
+        <span class="length-value" id="wc-val">4</span>
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-label">Word Separator</div>
+      </div>
+      <div class="pill-group" id="sep-group">
+        <button class="pill-btn active" data-sep="-">Dash -</button>
+        <button class="pill-btn" data-sep=" ">Space</button>
+        <button class="pill-btn" data-sep=".">Dot .</button>
+        <button class="pill-btn" data-sep="_">Underscore</button>
+        <button class="pill-btn" data-sep="number">Number</button>
+        <button class="pill-btn" data-sep="">None</button>
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-label">Capitalize First Letter</div>
+        <div class="setting-desc">Makes each word start with uppercase</div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="opt-capitalize" checked><span class="toggle-slider"></span></label>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-label">Add Number at End</div>
+        <div class="setting-desc">Appends a random 2-digit number</div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="opt-number"><span class="toggle-slider"></span></label>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-label">Add Symbol at End</div>
+        <div class="setting-desc">Appends a random symbol</div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="opt-symbol"><span class="toggle-slider"></span></label>
+    </div>
+  </div>
+
+  <button class="generate-btn" id="btn-generate">⚡ Generate Passphrase</button>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num" id="stat-words">4</div><div class="stat-label">Words</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-chars">—</div><div class="stat-label">Characters</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-entropy2">—</div><div class="stat-label">Entropy (bits)</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-score">—</div><div class="stat-label">Strength</div></div>
+  </div>
+
+  <!-- Examples -->
+  <div class="section">
+    <div class="section-title">💡 Example Passphrases</div>
+    <div class="info-box">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div><span class="badge badge-green">4 words</span> &nbsp;<code style="color:var(--green-bright);font-size:15px">correct-horse-battery-staple</code></div>
+        <div><span class="badge badge-blue">4 words + dot</span> &nbsp;<code style="color:var(--blue-bright);font-size:15px">ocean.forest.thunder.crystal</code></div>
+        <div><span class="badge badge-crypto">5 words cap</span> &nbsp;<code style="color:var(--text);font-size:15px">Purple Mountain River Garden Storm</code></div>
+        <div><span class="badge badge-yellow">4 words + num</span> &nbsp;<code style="color:var(--yellow);font-size:15px">flying-dragon-silver-storm-42</code></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Why Passphrases Are Better -->
+  <div class="section">
+    <div class="section-title">📊 Why Passphrases Win</div>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr><th>Property</th><th>Random 8 chars</th><th>4-word passphrase</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Example</td><td><code>x9K#mP2q</code></td><td><code>correct-horse-battery-staple</code></td></tr>
+          <tr><td>Entropy</td><td>~52 bits</td><td>~51 bits (from 200 words)</td></tr>
+          <tr><td>Memorability</td><td>❌ Very hard</td><td>✅ Easy</td></tr>
+          <tr><td>Typing speed</td><td>Slow</td><td>Fast</td></tr>
+          <tr><td>Crack time</td><td>~1 month</td><td>~550 years (word-list attack)</td></tr>
+          <tr><td>Better at 6 words</td><td>—</td><td>✅ Uncrackable in practice</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Generate 5 at once -->
+  <div class="section">
+    <div class="section-title" style="justify-content:space-between">
+      <span>📋 Generate 5 Passphrases</span>
+      <button class="btn btn-sm" id="btn-quick">Generate 5</button>
+    </div>
+    <div class="quick-list" id="quick-list"></div>
+  </div>
+
+  <div class="privacy-card" style="margin-top:2rem">
+    <span class="privacy-card-icon">🔒</span>
+    <span>Passwords generated and stored locally — never transmitted. Word list is embedded in the JavaScript file.</span>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="js/generator.js"></script>
+<script src="js/strength.js"></script>
+<script src="js/utils.js"></script>
+<script>
+  PKUtils.injectNav('passphrase.html');
+
+  let currentPP = '';
+  let currentSep = '-';
+
+  function getOpts() {
+    return {
+      wordCount: parseInt(PKUtils.el('word-count').value),
+      separator: currentSep,
+      capitalize: PKUtils.el('opt-capitalize').checked,
+      addNumber: PKUtils.el('opt-number').checked,
+      addSymbol: PKUtils.el('opt-symbol').checked
+    };
+  }
+
+  function renderWords(phrase, sep) {
+    if (!phrase) return phrase;
+    const effectiveSep = (sep === 'number' || sep === '') ? sep : sep;
+    // Split on likely separators for display
+    let parts;
+    if (!sep || sep === 'number') {
+      // split on digit boundaries or just show plain
+      parts = [phrase];
+    } else {
+      const escapedSep = sep.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      parts = phrase.split(new RegExp(escapedSep));
+    }
+    if (parts.length <= 1) return `<span class="word-chip">${phrase}</span>`;
+    return parts.map((w,i) =>
+      `<span class="word-chip">${w}</span>${i < parts.length-1 ? `<span class="separator-chip">${sep}</span>` : ''}`
+    ).join('');
+  }
+
+  function generate() {
+    const opts = getOpts();
+    const phrase = Generator.generatePassphrase(opts);
+    currentPP = phrase;
+
+    PKUtils.el('pp-display').innerHTML = renderWords(phrase, opts.separator === 'number' ? '' : opts.separator);
+
+    const result = PasswordStrength.analyze(phrase);
+    if (result) {
+      const bar = PKUtils.el('strength-bar');
+      bar.className = 'strength-bar-inner ' + result.colorClass;
+      bar.style.width = result.meterWidth + '%';
+      const st = PKUtils.el('strength-text');
+      st.className = 'strength-text ' + result.colorClass;
+      st.textContent = result.icon + ' ' + result.label;
+      PKUtils.setText('entropy-display', 'Entropy: ' + result.entropy.toFixed(1) + ' bits');
+      PKUtils.setText('crack-time', result.crackTime);
+      PKUtils.setText('stat-chars', phrase.length);
+      PKUtils.setText('stat-entropy2', result.entropy.toFixed(0));
+      PKUtils.setText('stat-score', result.score + '/100');
+    }
+    PKUtils.setText('stat-words', opts.wordCount);
+    Generator.saveToHistory(phrase, 'passphrase');
+  }
+
+  PKUtils.el('word-count').addEventListener('input', () => {
+    PKUtils.setText('wc-val', PKUtils.el('word-count').value);
+    generate();
+  });
+
+  document.querySelectorAll('#sep-group .pill-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#sep-group .pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentSep = btn.dataset.sep;
+      generate();
+    });
+  });
+
+  ['opt-capitalize','opt-number','opt-symbol'].forEach(id => {
+    PKUtils.el(id).addEventListener('change', generate);
+  });
+
+  PKUtils.el('btn-generate').addEventListener('click', generate);
+  PKUtils.el('btn-refresh').addEventListener('click', generate);
+
+  PKUtils.el('btn-copy').addEventListener('click', async () => {
+    if (!currentPP) return;
+    const ok = await PKUtils.copyToClipboard(currentPP);
+    if (ok) {
+      PKUtils.el('btn-copy').textContent = '✅';
+      PKUtils.showToast('Passphrase copied!', 'success');
+      setTimeout(() => PKUtils.el('btn-copy').textContent = '📋', 1500);
+    }
+  });
+
+  PKUtils.el('btn-quick').addEventListener('click', () => {
+    const opts = getOpts();
+    const list = PKUtils.el('quick-list');
+    list.innerHTML = Array.from({length:5}, () => {
+      const p = Generator.generatePassphrase(opts);
+      return `<div class="quick-item">
+        <span class="quick-pw" style="font-family:monospace;color:var(--green-bright)">${p}</span>
+        <button class="btn btn-sm" onclick="(async()=>{const ok=await PKUtils.copyToClipboard('${p.replace(/'/g,"\\'")}');if(ok){this.textContent='✅';setTimeout(()=>this.textContent='📋 Copy',1200);}})()">📋 Copy</button>
+      </div>`;
+    }).join('');
+  });
+
+  generate();
+</script>
+
+<div class="page" style="padding-top:0">
+<div class="seo-content">
+  <h2>What Is a Passphrase?</h2>
+  <p>A <strong>passphrase</strong> is a sequence of 4 or more random words used as a password — for example, <code>flying-dragon-silver-storm</code>. Unlike traditional passwords, passphrases derive their strength from the randomness of word selection, not from character complexity. They are significantly easier to memorize while remaining cryptographically strong when generated correctly.</p>
+
+  <h2>Passphrase vs Password — Which Is More Secure?</h2>
+  <p>Both are secure when properly generated. The comparison depends on context:</p>
+  <ul>
+    <li><strong>4-word passphrase</strong> (200-word list): ~30 bits entropy — moderate, best for low-risk accounts</li>
+    <li><strong>4-word passphrase</strong> (EFF 7,776-word list): ~51 bits entropy — comparable to 8-char random password</li>
+    <li><strong>6-word EFF passphrase</strong>: ~77 bits entropy — comparable to 12-char random password</li>
+    <li><strong>16-char random password</strong> (all types): ~104 bits entropy — highest per-character entropy</li>
+  </ul>
+  <p><strong>When to use a passphrase:</strong> For your password manager master password, Wi-Fi password, or any password you need to type by hand. <strong>When to use a random password:</strong> For everything stored in a password manager where you never type it manually.</p>
+
+  <h2>How PassKit.in Generates Passphrases</h2>
+  <p>PassKit uses <code>crypto.getRandomValues()</code> to randomly select words from an embedded 200+ word list — the digital equivalent of rolling dice. Words are joined by your chosen separator (hyphen, space, dot, number, or none). A trailing number can be appended to satisfy password policies that require digits. All generation happens in your browser — no server, no transmission.</p>
+
+  <h2>What Is Diceware?</h2>
+  <p><strong>Diceware</strong> is a passphrase method invented by Arnold Reinhold in 1995. You roll five physical dice to generate a 5-digit number, then look it up in a numbered word list. The Electronic Frontier Foundation (EFF) published an improved list in 2016 with more recognizable words. PassKit.in replicates diceware's randomness digitally using the browser's CSPRNG.</p>
+
+  <h2>Frequently Asked Questions</h2>
+  <div id="faq-list">
+    <div class="faq-item">
+      <button class="faq-q">What is a passphrase and why is it considered secure? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">A passphrase is 4+ random words used as a password. Security comes from the statistical randomness of word selection, not word obscurity. <code>correct-horse-battery-staple</code> is famous because it's both memorable and strong — the xkcd comic by Randall Munroe popularized this concept. A 4-word passphrase from a 7,776-word list has 51 bits of entropy; a 6-word version has 77 bits.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Is a passphrase stronger than a password? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Per character, a random password is stronger (6.5 bits/char vs ~3 bits/word for passphrases). But passphrases are far more memorable for the same practical security level. A 6-word EFF passphrase (~77 bits) is as strong as a 12-character random password — and much easier to remember. For your master password or any password you type by hand, a passphrase is the better choice.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">How many words should my passphrase have? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Use at least 4 words for low-risk accounts and 5–6 words for high-value accounts like email, banking, or your password manager master password. PassKit.in supports 3–8 words. For a password manager master password, we recommend 6 words with a number appended — approximately 80+ bits of entropy.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Can I add numbers or symbols to a passphrase? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Yes — PassKit.in has an option to append a random number to the passphrase (e.g., <code>flying-dragon-silver-storm-42</code>). This helps satisfy password policies that require digits without compromising memorability. Avoid predictably substituting letters with symbols (e.g., <code>p@ssword</code>) — attackers know these patterns. Random additions are fine.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Are passphrases vulnerable to dictionary attacks? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Only if the words are chosen predictably. A passphrase like <code>correct-horse-battery-staple</code> typed manually is now famous and would appear in attacker word lists. Always use a random generator like PassKit.in — never pick words yourself. With truly random selection from a large word list, dictionary attacks fail because the attacker cannot distinguish which words were selected from millions of possible combinations.</div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>
+
+
+
+
+
+

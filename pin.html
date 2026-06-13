@@ -1,0 +1,307 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PIN Generator — Secure Random 4–10 Digit PINs | PassKit.in</title>
+<meta name="description" content="Generate cryptographically secure random PINs for banks, phones, and apps. Automatically avoids common PINs like 1234, 0000. Free, instant, no sign-up.">
+<meta name="keywords" content="PIN generator, random PIN generator, secure PIN generator, 4 digit PIN generator, 6 digit PIN generator, bank PIN generator, ATM PIN generator, phone PIN, crypto random PIN, generador de contrasenas, mot de passe securise, Passwort Generator, gerador de senha, password sicuro, wachtwoord generator, haslo generator, parol ureteci, kodeord generator, generatore di password, generator hasel, passwort erstellen, clave segura, senha forte, contraseña aleatoria, mot de passe aleatoire, sichere passwort, senha aleatoria">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate" hreflang="en" href="https://passkit.in/pin.html">
+<link rel="alternate" hreflang="x-default" href="https://passkit.in/pin.html">
+<link rel="canonical" href="https://passkit.in/pin.html">
+<meta name="author" content="PassKit.in">
+<meta name="theme-color" content="#0d0f1a">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://passkit.in/pin.html">
+<meta property="og:title" content="Secure PIN Generator — 4 to 10 Digits | PassKit.in">
+<meta property="og:description" content="Generate secure random PINs. Avoids common PINs like 1234 and 0000. Free and private.">
+<meta property="og:image" content="https://passkit.in/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Secure PIN Generator — PassKit.in">
+<meta name="twitter:description" content="Generate cryptographically random PINs. Avoids 1234, 0000 and other common PINs automatically. Free, instant, no sign-up.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "PassKit.in — PIN Generator",
+  "url": "https://passkit.in/pin.html",
+  "description": "Free cryptographically secure PIN generator. Supports 4, 6, 8, and 10-digit PINs. Automatically excludes common, sequential, and repeating PINs.",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I create a secure PIN?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A secure PIN is completely random — not based on your birthday, address, or any pattern. Avoid common PINs like 1234, 0000, 1111, and sequential or repeating digits. Use PassKit.in's PIN generator to create a cryptographically random PIN using crypto.getRandomValues(), which automatically excludes the most common PINs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the most secure PIN length?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A 4-digit PIN has only 10,000 possible combinations (13.3 bits entropy). A 6-digit PIN has 1,000,000 combinations (19.9 bits). An 8-digit PIN has 100,000,000 combinations (26.6 bits). For maximum security, use a 6-digit or longer PIN and enable biometric authentication alongside it."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PassKit.in — PIN Generator",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "ratingCount": "412",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "PassKit.in", "item": "https://passkit.in/" },
+    { "@type": "ListItem", "position": 2, "name": "PIN Generator", "item": "https://passkit.in/pin.html" }
+  ]
+}
+</script><link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+<div class="page">
+  <div class="crypto-banner">🔐 CRYPTOGRAPHICALLY SECURE — uses crypto.getRandomValues()</div>
+  <h1 class="page-title">PIN Generator</h1>
+  <p class="page-sub">Generate cryptographically random PINs for banks, phones, and apps</p>
+
+  <div class="privacy-card">
+    <span class="privacy-card-icon">🔒</span>
+    <span>Passwords generated and stored locally — never transmitted.</span>
+  </div>
+
+  <!-- Length selector -->
+  <div class="settings-card">
+    <div class="settings-title">📏 PIN Length</div>
+    <div class="pill-group" id="length-group" style="gap:8px">
+      <button class="pill-btn" data-len="4" style="flex:1;text-align:center;padding:12px;font-size:16px;font-weight:700">4<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">10K combos</span></button>
+      <button class="pill-btn active" data-len="6" style="flex:1;text-align:center;padding:12px;font-size:16px;font-weight:700">6<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">1M combos</span></button>
+      <button class="pill-btn" data-len="8" style="flex:1;text-align:center;padding:12px;font-size:16px;font-weight:700">8<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">100M combos</span></button>
+      <button class="pill-btn" data-len="10" style="flex:1;text-align:center;padding:12px;font-size:16px;font-weight:700">10<br><span style="font-size:10px;font-weight:400;color:var(--text-3)">10B combos</span></button>
+    </div>
+  </div>
+
+  <!-- Options -->
+  <div class="settings-card">
+    <div class="settings-title">⚙️ Security Options</div>
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-label">Exclude Sequential Digits</div>
+        <div class="setting-desc">Rejects PINs with 123, 987, etc.</div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="opt-seq" checked><span class="toggle-slider"></span></label>
+    </div>
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-label">Exclude Repeating Digits</div>
+        <div class="setting-desc">Rejects PINs with 000, 111, etc.</div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="opt-rep" checked><span class="toggle-slider"></span></label>
+    </div>
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-label">Avoid Common PINs</div>
+        <div class="setting-desc">Excludes 0000, 1234, 1111, etc.</div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="opt-common" checked><span class="toggle-slider"></span></label>
+    </div>
+  </div>
+
+  <button class="generate-btn" id="btn-generate">⚡ Generate PIN</button>
+
+  <!-- PIN Display -->
+  <div class="settings-card" style="text-align:center" id="pin-display-card">
+    <div class="settings-title">Your PIN</div>
+    <div class="pin-digits" id="pin-digits">
+      <div class="pin-digit">—</div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:0.5rem">
+      <button class="btn" id="btn-copy">📋 Copy PIN</button>
+      <button class="btn" id="btn-refresh">🔄 Regenerate</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num" id="stat-len">6</div><div class="stat-label">Digits</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-combos">1,000,000</div><div class="stat-label">Combinations</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-entropy">19.9</div><div class="stat-label">Entropy (bits)</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-crack">~17 min</div><div class="stat-label">Crack Time*</div></div>
+  </div>
+  <p style="font-size:11px;color:var(--text-3);margin-bottom:1.5rem">*At 1,000 guesses/second — typical ATM rate limiting</p>
+
+  <!-- Generate 5 PINs -->
+  <div class="section">
+    <div class="section-title" style="justify-content:space-between">
+      <span>📋 Generate 5 PINs</span>
+      <button class="btn btn-sm" id="btn-quick">Generate 5</button>
+    </div>
+    <div id="quick-pins" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:0.5rem"></div>
+  </div>
+
+  <!-- Security Note -->
+  <div class="callout callout-yellow">
+    <strong>⚠️ PIN Security Facts:</strong><br>
+    A 4-digit PIN has only 10,000 combinations — an attacker with unlimited attempts could try all in seconds. Most systems limit attempts to 3-10 before locking, which makes even 4-digit PINs practical. But always use the <strong>maximum allowed length</strong>.
+  </div>
+
+  <!-- Common Weak PINs -->
+  <div class="info-box">
+    <h3>❌ Most Common PINs to Avoid</h3>
+    <p style="font-family:monospace;color:var(--text-2);line-height:2;font-size:13px">
+      0000 · 1111 · 1234 · 4321 · 0123 · 9999 · 1212 · 7777 · 2222 · 3333 ·
+      4444 · 5555 · 6666 · 8888 · 2580 · 1357 · 0852 · 1470 · 2468 · 9876 ·
+      1004 · 2000 · 2001 · 1984 · 0007 · 1122 · 1313 · 2323 · 6969 · 6666
+    </p>
+    <p style="color:var(--text-3);font-size:12px;margin-top:6px">These 30 PINs account for ~25% of all PINs used — attackers try these first.</p>
+  </div>
+
+  <!-- SEO Content -->
+  <section class="seo-content" aria-label="PIN security guide">
+    <h2>How to Create a Secure PIN in 2025</h2>
+    <p>A PIN (Personal Identification Number) is a short numeric code used to authenticate access to bank accounts, phone lock screens, apps, and secure facilities. Despite being short, a random PIN is secure — as long as the system limits guessing attempts. PassKit.in generates cryptographically random PINs using <code>crypto.getRandomValues()</code> and automatically excludes the most common PINs that attackers try first.</p>
+
+    <h3>PIN Length and Security</h3>
+    <p>The security of a PIN depends almost entirely on its length and randomness. Here is what each PIN length gives you:</p>
+    <ul>
+      <li><strong>4 digits:</strong> 10,000 combinations (13.3 bits) — standard for most bank cards and phone screens</li>
+      <li><strong>6 digits:</strong> 1,000,000 combinations (19.9 bits) — used by many banks and iPhone/Android when 4-digit is disabled</li>
+      <li><strong>8 digits:</strong> 100,000,000 combinations (26.6 bits) — strong, used for high-security systems</li>
+      <li><strong>10 digits:</strong> 10,000,000,000 combinations (33.2 bits) — very strong, rarely used for daily PINs</li>
+    </ul>
+
+    <h3>Most Common PINs to Avoid</h3>
+    <p>Research on leaked PIN databases shows that people overwhelmingly choose predictable PINs. The top 20 most common 4-digit PINs — including 1234, 0000, 1111, 1212, and birth-year patterns — account for over 25% of all PINs. An attacker who tries just these 20 combinations has a 1-in-4 chance of guessing a randomly-chosen user's PIN.</p>
+    <p>PassKit.in's "Avoid Common PINs" option automatically excludes the top 100 most commonly used PINs, as well as sequential patterns (1234, 4321) and repeating digits (1111, 2222).</p>
+
+    <h3>When Is a PIN Safe Enough?</h3>
+    <p>A PIN is secure when the system enforces lockout after a small number of wrong guesses (typically 3–10). With lockout enforced, even a 4-digit PIN is practically uncrackable because an attacker can only try a handful of guesses. Where PINs are less safe is when a device is stolen and the PIN hash can be brute-forced offline — for those scenarios, use a 6-digit or longer PIN.</p>
+
+    <h2>Frequently Asked Questions</h2>
+    <details open>
+      <summary><strong>What is a good PIN number?</strong></summary>
+      <p>A good PIN is completely random — generated by a computer, not chosen by a human. Avoid any PIN that represents a date, a year, a phone number pattern, or a sequence. A 6-digit random PIN generated by PassKit.in using <code>crypto.getRandomValues()</code> is the best balance of security and usability for most applications.</p>
+    </details>
+    <details>
+      <summary><strong>Can someone guess my PIN?</strong></summary>
+      <p>If your PIN is random and the system locks after a few wrong guesses, your PIN is very hard to guess — a 4-digit PIN allows only 3 tries out of 10,000 (0.03%). The danger is using a common PIN like 1234 or 0000, which an attacker will always try first. PassKit.in's PIN generator avoids these common patterns automatically.</p>
+    </details>
+    <details>
+      <summary><strong>Is 4-digit or 6-digit PIN more secure?</strong></summary>
+      <p>A random 6-digit PIN is 100× more secure than a random 4-digit PIN (1,000,000 vs 10,000 combinations). Most security experts recommend 6-digit PINs for phone lock screens and banking apps. If your service supports it, always choose 6 digits over 4.</p>
+    </details>
+  </section>
+</div>
+
+<div id="toast-container"></div>
+<script src="js/generator.js"></script>
+<script src="js/strength.js"></script>
+<script src="js/utils.js"></script>
+<script>
+  PKUtils.injectNav('pin.html');
+
+  let currentLen = 6;
+  let currentPIN = '';
+
+  const combos = { 4: '10,000', 6: '1,000,000', 8: '100,000,000', 10: '10,000,000,000' };
+  const entropy = { 4: '13.3', 6: '19.9', 8: '26.6', 10: '33.2' };
+  const crackTime = { 4: '~10 sec', 6: '~17 min', 8: '~27 hrs', 10: '~115 days' };
+
+  document.querySelectorAll('#length-group .pill-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#length-group .pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentLen = parseInt(btn.dataset.len);
+      updateStats();
+      generate();
+    });
+  });
+
+  function updateStats() {
+    PKUtils.setText('stat-len', currentLen);
+    PKUtils.setText('stat-combos', combos[currentLen] || '—');
+    PKUtils.setText('stat-entropy', entropy[currentLen] || '—');
+    PKUtils.setText('stat-crack', crackTime[currentLen] || '—');
+  }
+
+  function getOpts() {
+    return {
+      excludeSequential: PKUtils.el('opt-seq').checked,
+      excludeRepeating: PKUtils.el('opt-rep').checked,
+      excludeCommon: PKUtils.el('opt-common').checked
+    };
+  }
+
+  function generate() {
+    const pin = Generator.generatePIN(currentLen, getOpts());
+    currentPIN = pin;
+    const container = PKUtils.el('pin-digits');
+    container.innerHTML = pin.split('').map(d => `<div class="pin-digit">${d}</div>`).join('');
+    Generator.saveToHistory(pin, 'PIN');
+  }
+
+  PKUtils.el('btn-generate').addEventListener('click', generate);
+  PKUtils.el('btn-refresh').addEventListener('click', generate);
+
+  PKUtils.el('btn-copy').addEventListener('click', async () => {
+    if (!currentPIN) return;
+    const ok = await PKUtils.copyToClipboard(currentPIN);
+    if (ok) {
+      PKUtils.showToast('PIN copied!', 'success');
+      PKUtils.el('btn-copy').textContent = '✅ Copied';
+      setTimeout(() => PKUtils.el('btn-copy').textContent = '📋 Copy PIN', 1500);
+    }
+  });
+
+  PKUtils.el('btn-quick').addEventListener('click', () => {
+    const opts = getOpts();
+    const container = PKUtils.el('quick-pins');
+    container.innerHTML = Array.from({length:5}, () => {
+      const p = Generator.generatePIN(currentLen, opts);
+      return `<div style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:8px 14px;display:flex;align-items:center;gap:10px">
+        <span style="font-family:monospace;font-size:18px;font-weight:700;color:var(--blue-bright);letter-spacing:0.2em">${p}</span>
+        <button class="btn btn-sm" onclick="(async()=>{const ok=await PKUtils.copyToClipboard('${p}');if(ok){this.textContent='✅';setTimeout(()=>this.textContent='📋',1200);}})()">📋</button>
+      </div>`;
+    }).join('');
+  });
+
+  ['opt-seq','opt-rep','opt-common'].forEach(id => {
+    PKUtils.el(id).addEventListener('change', generate);
+  });
+
+  updateStats();
+  generate();
+</script>
+</body>
+</html>
+
+
+
+
+

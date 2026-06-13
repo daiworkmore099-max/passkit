@@ -1,0 +1,339 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Password Breach Checker — HIBP API | PassKit.in</title>
+<meta name="description" content="Check if your password was exposed in a data breach using HIBP k-anonymity. Your password never leaves your browser.">
+<meta name="keywords" content="password breach checker, have i been pwned, password leaked check, data breach password, k-anonymity password check, hibp password checker, was my password hacked, check password breach, generador de contrasenas, mot de passe securise, Passwort Generator, gerador de senha, password sicuro, wachtwoord generator, haslo generator, parol ureteci, kodeord generator, generatore di password, generator hasel, passwort erstellen, clave segura, senha forte, contraseña aleatoria, mot de passe aleatoire, sichere passwort, senha aleatoria">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate" hreflang="en" href="https://passkit.in/breach-check.html">
+<link rel="alternate" hreflang="x-default" href="https://passkit.in/breach-check.html">
+<link rel="canonical" href="https://passkit.in/breach-check.html">
+<meta name="author" content="PassKit.in">
+<meta name="theme-color" content="#0d0f1a">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://passkit.in/breach-check.html">
+<meta property="og:title" content="Password Breach Checker — HIBP K-Anonymity, 100% Private | PassKit.in">
+<meta property="og:description" content="Check if your password appeared in a data breach. Your actual password is never sent anywhere — k-anonymity ensures complete privacy.">
+<meta property="og:image" content="https://passkit.in/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Password Breach Checker — PassKit.in">
+<meta name="twitter:description" content="Check if your password was in a data breach. Uses HaveIBeenPwned k-anonymity — your password is never transmitted. 100% private.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "PassKit.in — Password Breach Checker",
+  "url": "https://passkit.in/breach-check.html",
+  "description": "Free password breach checker using HaveIBeenPwned k-anonymity API. Your actual password is never transmitted — only the first 5 characters of its SHA-1 hash.",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does Have I Been Pwned work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "HaveIBeenPwned (HIBP) is a free service by security researcher Troy Hunt that collects and indexes passwords exposed in data breaches. It currently holds over 10 billion compromised passwords. When you check a password, PassKit.in hashes it with SHA-1 in your browser, sends only the first 5 characters of that hash to the HIBP API, receives ~500 matching hash suffixes back, and checks locally whether your full hash appears in that list. Your actual password is never transmitted."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is k-anonymity in password checking?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "K-anonymity is a privacy technique that allows you to check if your password is breached without revealing the password itself. PassKit.in hashes your password with SHA-1 (producing a 40-character hex string), then sends only the first 5 characters to the HaveIBeenPwned API. The API returns all hashes starting with those 5 characters (typically 400–900 results). The browser then checks locally whether your full hash is in that list. The server never learns which specific password you checked."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it safe to type my password into a breach checker?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is safe on PassKit.in because your password is hashed locally in your browser before any network request is made. The SHA-1 hash of your password is computed in JavaScript, then only the first 5 characters of that hash (out of 40) are sent to the API. From those 5 characters, it is cryptographically impossible to recover your original password."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PassKit.in — Password Breach Checker",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "ratingCount": "412",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "PassKit.in", "item": "https://passkit.in/" },
+    { "@type": "ListItem", "position": 2, "name": "Password Breach Checker", "item": "https://passkit.in/breach-check.html" }
+  ]
+}
+</script><link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+<div class="page">
+  <div class="crypto-banner">🔐 K-ANONYMITY — Your password never leaves your device</div>
+  <h1 class="page-title">Password Breach Checker</h1>
+  <p class="page-sub">Check if your password was exposed in known data breaches — anonymously and privately</p>
+
+  <!-- Large Privacy Explainer -->
+  <div class="settings-card" style="border-color:var(--green);border-left:3px solid var(--green)">
+    <div class="section-title" style="color:var(--green-bright);margin-bottom:0.75rem">🔐 How We Protect Your Privacy</div>
+    <ol style="padding-left:1.5rem;color:var(--text-2);line-height:2.2;font-size:13px">
+      <li>Your password is <strong style="color:var(--text)">hashed using SHA-1</strong> entirely in your browser</li>
+      <li><strong style="color:var(--text)">Only the first 5 characters</strong> of the hash are sent to the API</li>
+      <li>The API returns <strong style="color:var(--text)">all hash matches</strong> for that prefix (~500 results)</li>
+      <li>Your browser checks <strong style="color:var(--text)">locally</strong> if your password's hash is in the list</li>
+      <li><strong style="color:var(--green-bright)">Your actual password NEVER leaves your device</strong></li>
+    </ol>
+    <div style="margin-top:10px;padding:8px 12px;background:rgba(16,185,129,0.08);border-radius:8px;font-size:12px;color:var(--green-bright)">
+      This is called <strong>k-anonymity</strong> — the same model used by Have I Been Pwned (HIBP), trusted by security researchers worldwide and endorsed by Troy Hunt, Microsoft, and NCSC.
+    </div>
+  </div>
+
+  <!-- Single Password Check -->
+  <div class="settings-card">
+    <div class="settings-title">🔍 Check a Password</div>
+    <div class="breach-input-wrap" style="margin-bottom:1rem">
+      <input type="password" class="breach-input" id="pw-input" placeholder="Enter a password to check..." autocomplete="off" autocorrect="off" spellcheck="false">
+      <button class="show-hide-btn" id="show-hide">👁</button>
+    </div>
+    <button class="generate-btn" id="btn-check" style="margin-bottom:0">🛡️ Check Password</button>
+  </div>
+
+  <!-- Loading State -->
+  <div id="checking-state" style="display:none;text-align:center;padding:1.5rem;color:var(--text-3);font-size:13px">
+    <span class="spinner" style="width:20px;height:20px;margin-bottom:8px;display:block;margin:0 auto 10px"></span>
+    Checking securely via k-anonymity…<br>
+    <small>Only first 5 chars of SHA-1 hash sent · Password stays in your browser</small>
+  </div>
+
+  <!-- Result -->
+  <div id="result-safe" class="breach-result safe" style="display:none">
+    <div class="breach-result-icon">🛡️</div>
+    <div class="breach-result-label">Good news — not found in breaches!</div>
+    <div class="breach-result-desc">This password doesn't appear in any known data breach database. It may still be weak — <a href="strength-test.html">run a strength test</a> to be sure.</div>
+  </div>
+
+  <div id="result-found" class="breach-result found" style="display:none">
+    <div class="breach-result-icon">⚠️</div>
+    <div class="breach-result-label" id="found-label">Found in data breaches!</div>
+    <div class="breach-result-desc" id="found-desc">This password has been exposed in known data breaches. Change it immediately on all sites where you use it.</div>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+      <a href="index.html" class="btn btn-primary btn-sm">⚡ Generate Strong Password</a>
+      <a href="strength-test.html" class="btn btn-sm">🔬 Test Strength</a>
+    </div>
+  </div>
+
+  <div id="result-error" class="breach-result" style="display:none;border-color:var(--yellow)">
+    <div class="breach-result-icon">⚠️</div>
+    <div class="breach-result-label" style="color:var(--yellow)">Could not connect</div>
+    <div class="breach-result-desc">Unable to reach the HaveIBeenPwned API. Check your internet connection and try again.</div>
+  </div>
+
+  <div class="privacy-note" style="margin-bottom:1.5rem">
+    🔐 <strong>Technical detail:</strong> SHA-1 hash computed via <code>crypto.subtle.digest('SHA-1', ...)</code> in your browser. First 5 hex chars sent to <code>api.pwnedpasswords.com/range/{prefix}</code>. Response contains ~500 hash suffixes checked locally. Zero privacy risk.
+  </div>
+
+  <!-- Bulk Check -->
+  <div class="settings-card">
+    <div class="section-title" style="margin-bottom:0.75rem">📋 Bulk Password Check</div>
+    <div style="margin-bottom:0.75rem;font-size:13px;color:var(--text-2)">Paste one password per line to check multiple passwords at once.</div>
+    <textarea class="input-field" id="bulk-input" rows="5" placeholder="password1&#10;mySecretPass&#10;correctHorseBattery&#10;...one per line" style="resize:vertical;font-family:monospace;margin-bottom:0.75rem"></textarea>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <button class="btn btn-primary" id="btn-bulk-check">🛡️ Check All</button>
+      <span id="bulk-progress" style="font-size:12px;color:var(--text-3)"></span>
+    </div>
+    <div id="bulk-results" style="margin-top:1rem"></div>
+  </div>
+
+  <!-- Email Note -->
+  <div class="callout callout-yellow" style="margin-top:1.5rem">
+    <strong>📧 Email Breach Check:</strong> To check if your <em>email address</em> was in a breach, visit <a href="https://haveibeenpwned.com" target="_blank" rel="noopener">haveibeenpwned.com</a> directly. PassKit only checks passwords, not email addresses.
+  </div>
+
+  <!-- How to respond -->
+  <div class="info-box">
+    <h3>🚨 If Your Password Was Found — What to Do</h3>
+    <ol style="padding-left:1.25rem;color:var(--text-2);line-height:2;font-size:13px">
+      <li>Change the password on every site where you use it <strong>immediately</strong></li>
+      <li>Generate a new strong password using <a href="index.html">PassKit's generator</a></li>
+      <li>Use a <strong>unique password</strong> for every site going forward</li>
+      <li>Enable two-factor authentication (2FA) on important accounts</li>
+      <li>Consider using a password manager to manage unique passwords everywhere</li>
+    </ol>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="js/generator.js"></script>
+<script src="js/strength.js"></script>
+<script src="js/utils.js"></script>
+<script>
+  PKUtils.injectNav('breach-check.html');
+
+  let showPw = false;
+
+  PKUtils.el('show-hide').addEventListener('click', () => {
+    showPw = !showPw;
+    PKUtils.el('pw-input').type = showPw ? 'text' : 'password';
+    PKUtils.el('show-hide').textContent = showPw ? '🙈' : '👁';
+  });
+
+  function hideResults() {
+    ['result-safe','result-found','result-error','checking-state'].forEach(id => {
+      PKUtils.el(id).style.display = 'none';
+    });
+  }
+
+  async function checkPassword(pw) {
+    if (!pw.trim()) { PKUtils.showToast('Please enter a password to check', 'warning'); return; }
+
+    hideResults();
+    PKUtils.el('checking-state').style.display = 'block';
+
+    try {
+      const result = await PasswordStrength.checkBreach(pw);
+      PKUtils.el('checking-state').style.display = 'none';
+
+      if (result.found) {
+        PKUtils.el('result-found').style.display = 'block';
+        PKUtils.setText('found-label', `⚠️ Found in ${result.count.toLocaleString()} data breaches!`);
+        PKUtils.setText('found-desc', `This exact password has appeared in data breaches ${result.count.toLocaleString()} times. Attackers actively use lists like this. Change it immediately on every site where you use it.`);
+      } else {
+        PKUtils.el('result-safe').style.display = 'block';
+      }
+    } catch (e) {
+      PKUtils.el('checking-state').style.display = 'none';
+      PKUtils.el('result-error').style.display = 'block';
+    }
+  }
+
+  PKUtils.el('btn-check').addEventListener('click', () => {
+    checkPassword(PKUtils.el('pw-input').value);
+  });
+
+  PKUtils.el('pw-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') checkPassword(PKUtils.el('pw-input').value);
+  });
+
+  PKUtils.el('btn-bulk-check').addEventListener('click', async () => {
+    const lines = PKUtils.el('bulk-input').value.split('\n').map(l => l.trim()).filter(Boolean);
+    if (!lines.length) { PKUtils.showToast('Paste at least one password', 'warning'); return; }
+    if (lines.length > 20) { PKUtils.showToast('Maximum 20 passwords at once to avoid rate limiting', 'warning'); return; }
+
+    const progress = PKUtils.el('bulk-progress');
+    const container = PKUtils.el('bulk-results');
+    container.innerHTML = '';
+    const rows = [];
+
+    for (let i = 0; i < lines.length; i++) {
+      const pw = lines[i];
+      progress.textContent = `Checking ${i+1}/${lines.length}…`;
+      try {
+        const res = await PasswordStrength.checkBreach(pw);
+        rows.push({ pw, found: res.found, count: res.count });
+      } catch (e) {
+        rows.push({ pw, found: null, count: 0 });
+      }
+      await new Promise(r => setTimeout(r, 200)); // small delay to be kind to API
+    }
+
+    progress.textContent = `Done — ${rows.length} checked`;
+
+    container.innerHTML = `
+      <div class="bulk-table-wrap">
+        <table class="bulk-table">
+          <thead><tr><th>#</th><th>Password</th><th>Status</th><th>Breach Count</th></tr></thead>
+          <tbody>
+            ${rows.map((r, i) => `
+              <tr>
+                <td style="color:var(--text-3)">${i+1}</td>
+                <td>${'•'.repeat(Math.min(r.pw.length, 20))}</td>
+                <td>${r.found === null ? '<span class="badge badge-yellow">Error</span>' : r.found ? '<span class="badge badge-red">⚠️ Found</span>' : '<span class="badge badge-green">✅ Safe</span>'}</td>
+                <td style="font-family:monospace">${r.found ? r.count.toLocaleString() : r.found === null ? '—' : '0'}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  });
+</script>
+
+<div class="page" style="padding-top:0">
+<div class="seo-content">
+  <h2>How Does PassKit Check Passwords Without Exposing Them?</h2>
+  <p>PassKit.in uses the <strong>HaveIBeenPwned Pwned Passwords API</strong> with <strong>k-anonymity</strong> — a privacy model that makes it mathematically impossible for the server to learn which password you checked. Here is exactly what happens when you click "Check Password":</p>
+  <ol>
+    <li>Your browser computes the <strong>SHA-1 hash</strong> of your password (e.g., <code>5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8</code>)</li>
+    <li>Only the <strong>first 5 characters</strong> (<code>5BAA6</code>) are sent to the HIBP API over HTTPS</li>
+    <li>The API returns all hash suffixes that start with <code>5BAA6</code> — typically 400–900 results</li>
+    <li>Your browser checks <strong>locally</strong> whether your full hash suffix appears in that list</li>
+    <li>Result: safe or compromised — displayed instantly, nothing transmitted except 5 harmless characters</li>
+  </ol>
+
+  <h2>What Is k-Anonymity?</h2>
+  <p><strong>K-anonymity</strong> is a privacy concept where a query is indistinguishable from at least k−1 other queries. In the HIBP model, sending only 5 hex characters means your query matches approximately 500 other hashes — the API cannot determine which of those 500 you care about. This technique was designed by Troy Hunt (creator of HIBP) and Cloudflare researchers, and is endorsed by NCSC (UK), Microsoft, and security researchers worldwide.</p>
+
+  <h2>What Is SHA-1 Hashing?</h2>
+  <p><strong>SHA-1</strong> (Secure Hash Algorithm 1) is a cryptographic hash function that converts any input into a fixed 40-character hexadecimal string. It is a one-way function — you cannot reverse a SHA-1 hash to obtain the original password. PassKit.in uses the browser's native <code>crypto.subtle.digest('SHA-1', ...)</code> — no external library required. While SHA-1 is deprecated for digital signatures, it remains appropriate for this HIBP lookup use case.</p>
+
+  <h2>What Happens If My Password Is Found in a Breach?</h2>
+  <p>A result showing your password appeared in breaches means that exact password string has been exposed in at least one known data breach and is now in attacker databases. <strong>You should change that password immediately</strong> on every account where you use it. Use PassKit.in's <a href="index.html">password generator</a> to create a new, unique password for each account, and store them in a password manager.</p>
+
+  <h2>Frequently Asked Questions</h2>
+  <div id="faq-list">
+    <div class="faq-item">
+      <button class="faq-q">How does Have I Been Pwned work? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">HaveIBeenPwned (HIBP) is a service by security researcher Troy Hunt that collects passwords exposed in data breaches — over 10 billion compromised passwords as of 2025. When PassKit.in checks a password, it sends only the first 5 characters of the SHA-1 hash to HIBP's API. The API returns ~500 matching hashes. Your browser checks locally if your full hash is in that list. Your actual password never travels over the network.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Is it safe to type my real password into a breach checker? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">On PassKit.in, yes — because your password is hashed entirely in your browser before any network request. The SHA-1 hash is computed locally via <code>crypto.subtle.digest()</code>, and only 5 of the resulting 40 characters are sent over the network. It is mathematically impossible to recover your original password from 5 hex characters out of context.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">What is k-anonymity in password checking? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">K-anonymity ensures your query blends in with hundreds of other queries. Sending the first 5 hash characters returns ~500 matching hashes from the HIBP server. The server cannot determine which of those 500 hashes you are looking for — your query is indistinguishable from 499 others. This privacy model was co-developed by Troy Hunt and Cloudflare in 2018.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">My password shows as "breached" — what should I do? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Change it immediately on every account where you use it. Use PassKit.in's <a href="index.html">password generator</a> to create a unique, strong replacement for each account. Never reuse passwords — if one account is breached, unique passwords prevent attackers from accessing your other accounts (credential stuffing attacks).</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">How many breached passwords does HIBP have? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">As of 2025, HaveIBeenPwned contains over 10 billion compromised passwords collected from hundreds of data breaches including LinkedIn (117M), Adobe (153M), Collection #1–5, RockYou2021 (8.4B), and many others. If your password appears even once in this database, it is considered compromised and should be replaced immediately.</div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PassKit — Test Runner</title>
+<link rel="stylesheet" href="../css/main.css">
+<style>
+  .test-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .test-item:last-child { border-bottom: none; }
+  .test-status { font-size: 18px; flex-shrink: 0; width: 24px; }
+  .test-name { flex: 1; font-weight: 500; color: var(--text); }
+  .test-detail { font-size: 11px; color: var(--text-3); font-family: monospace; }
+  .test-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+  .test-badge.pass { background: rgba(16,185,129,0.15); color: var(--green-bright); }
+  .test-badge.fail { background: rgba(239,68,68,0.15); color: var(--red); }
+  .test-badge.warn { background: rgba(245,158,11,0.15); color: var(--yellow); }
+  .test-badge.critical { background: rgba(239,68,68,0.3); color: var(--red); border: 1px solid var(--red); }
+  .summary-card {
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.5rem; text-align: center; margin-bottom: 1.5rem;
+  }
+  .summary-num { font-size: 48px; font-weight: 800; font-family: monospace; }
+  .summary-label { font-size: 14px; color: var(--text-2); margin-top: 4px; }
+  .critical-banner {
+    background: rgba(239,68,68,0.12); border: 1px solid var(--red);
+    border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1rem;
+    display: none;
+  }
+</style>
+</head>
+<body>
+<div id="nav-placeholder"></div>
+<div class="page">
+  <div class="crypto-banner">🧪 PASSKIT TEST RUNNER — Browser API Compatibility Check</div>
+  <h1 class="page-title">Security API Test Runner</h1>
+  <p class="page-sub">Verifies all browser APIs required by PassKit are available and working correctly</p>
+
+  <!-- Critical Banner -->
+  <div class="critical-banner" id="critical-banner">
+    <strong style="color:var(--red)">⚠️ CRITICAL: crypto.getRandomValues() is NOT available!</strong><br>
+    <span style="font-size:13px;color:var(--text-2)">Password generation will not be cryptographically secure. Please use a modern browser (Chrome 37+, Firefox 36+, Safari 11+, Edge 12+).</span>
+  </div>
+
+  <!-- Summary -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem" id="summary-row">
+    <div class="summary-card">
+      <div class="summary-num" id="pass-count" style="color:var(--green-bright)">—</div>
+      <div class="summary-label">✅ Passed</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-num" id="fail-count" style="color:var(--red)">—</div>
+      <div class="summary-label">❌ Failed</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-num" id="total-count" style="color:var(--blue-bright)">—</div>
+      <div class="summary-label">🧪 Total Tests</div>
+    </div>
+  </div>
+
+  <!-- Overall Status -->
+  <div id="overall-status" style="text-align:center;font-size:16px;font-weight:700;margin-bottom:1.5rem;padding:14px;border-radius:10px"></div>
+
+  <!-- Test Results -->
+  <div class="settings-card" style="padding:0;overflow:hidden">
+    <div style="padding:12px 14px;background:var(--surface-3);border-bottom:1px solid var(--border)">
+      <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3)">Test Results</span>
+    </div>
+    <div id="test-results"></div>
+  </div>
+
+  <!-- Generator Tests -->
+  <div class="settings-card" style="padding:0;overflow:hidden;margin-top:1rem">
+    <div style="padding:12px 14px;background:var(--surface-3);border-bottom:1px solid var(--border)">
+      <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3)">Generator Functionality Tests</span>
+    </div>
+    <div id="gen-results"></div>
+  </div>
+
+  <!-- Strength Tests -->
+  <div class="settings-card" style="padding:0;overflow:hidden;margin-top:1rem">
+    <div style="padding:12px 14px;background:var(--surface-3);border-bottom:1px solid var(--border)">
+      <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-3)">Strength Analysis Tests</span>
+    </div>
+    <div id="strength-results"></div>
+  </div>
+
+  <div style="text-align:center;margin-top:2rem">
+    <button class="btn btn-primary" onclick="location.reload()">🔄 Run Tests Again</button>
+    <a href="../index.html" class="btn" style="margin-left:8px">← Back to PassKit</a>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="../js/generator.js"></script>
+<script src="../js/strength.js"></script>
+<script src="../js/utils.js"></script>
+<script>
+  PKUtils.injectNav('');
+
+  const results = [];
+
+  function test(name, critical, fn) {
+    try {
+      const detail = fn();
+      results.push({ name, status: 'pass', detail: detail || 'OK', critical });
+    } catch (e) {
+      results.push({ name, status: 'fail', detail: e.message || 'Failed', critical });
+    }
+  }
+
+  async function testAsync(name, critical, fn) {
+    try {
+      const detail = await fn();
+      results.push({ name, status: 'pass', detail: detail || 'OK', critical });
+    } catch (e) {
+      results.push({ name, status: 'fail', detail: e.message || 'Failed', critical });
+    }
+  }
+
+  function renderResults(containerId, items) {
+    const icons = { pass: '✅', fail: '❌', warn: '⚠️' };
+    PKUtils.el(containerId).innerHTML = items.map(r => `
+      <div class="test-item">
+        <span class="test-status">${icons[r.status] || '—'}</span>
+        <span class="test-name">${r.name}${r.critical ? ' <span style="color:var(--red);font-size:10px">CRITICAL</span>' : ''}</span>
+        <span class="test-detail">${r.detail}</span>
+        <span class="test-badge ${r.status}">${r.status.toUpperCase()}</span>
+      </div>`).join('');
+  }
+
+  async function runAll() {
+    // ── Browser API Tests ──
+    const apiTests = [];
+
+    function apiTest(name, critical, fn) {
+      try { const d = fn(); apiTests.push({ name, status: 'pass', detail: d || 'Available', critical }); }
+      catch(e) { apiTests.push({ name, status: 'fail', detail: e.message, critical }); }
+    }
+
+    apiTest('crypto.getRandomValues()', true, () => {
+      const arr = new Uint32Array(8);
+      crypto.getRandomValues(arr);
+      if (!arr.some(v => v !== 0)) throw new Error('All zeros — not generating random values');
+      return `Generated: [${arr[0]}, ${arr[1]}, ...]`;
+    });
+
+    apiTest('crypto.subtle.digest (SHA-1)', true, () => {
+      if (!crypto.subtle) throw new Error('crypto.subtle not available');
+      if (!crypto.subtle.digest) throw new Error('crypto.subtle.digest not available');
+      return 'crypto.subtle.digest available';
+    });
+
+    apiTest('TextEncoder API', true, () => {
+      const enc = new TextEncoder();
+      const data = enc.encode('test');
+      if (!(data instanceof Uint8Array)) throw new Error('TextEncoder returned wrong type');
+      return `Encoded 4 bytes: [${data[0]}, ${data[1]}, ...]`;
+    });
+
+    apiTest('localStorage', false, () => {
+      localStorage.setItem('pk-test', '1');
+      const v = localStorage.getItem('pk-test');
+      localStorage.removeItem('pk-test');
+      if (v !== '1') throw new Error('Read/write mismatch');
+      return 'Read/write working';
+    });
+
+    apiTest('Clipboard API (navigator.clipboard)', false, () => {
+      if (!navigator.clipboard) throw new Error('navigator.clipboard not available (requires HTTPS)');
+      return 'Available (HTTPS required to write)';
+    });
+
+    apiTest('Canvas API', false, () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('canvas.getContext("2d") failed');
+      return '2D context available';
+    });
+
+    apiTest('fetch API', false, () => {
+      if (typeof fetch === 'undefined') throw new Error('fetch not available');
+      return 'fetch() available';
+    });
+
+    apiTest('URL.createObjectURL (Blob downloads)', false, () => {
+      const blob = new Blob(['test'], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      URL.revokeObjectURL(url);
+      if (!url.startsWith('blob:')) throw new Error('URL not a blob: URL');
+      return 'Blob URL created successfully';
+    });
+
+    apiTest('Blob API', false, () => {
+      const b = new Blob(['PassKit test'], { type: 'text/plain' });
+      if (b.size !== 12) throw new Error(`Expected 12 bytes, got ${b.size}`);
+      return `Blob created: ${b.size} bytes`;
+    });
+
+    apiTest('Regular Expressions', false, () => {
+      const m = 'abc123!'.match(/[A-Z]/);
+      const n = /[0-9]/.test('abc123');
+      const s = /[^A-Za-z0-9]/.test('abc!');
+      if (!n || !s) throw new Error('Regex mismatch');
+      return 'Pattern matching working';
+    });
+
+    apiTest('BigInt support', false, () => {
+      const b = BigInt('999999999999999999999999999999');
+      if (typeof b !== 'bigint') throw new Error('BigInt not supported');
+      return `BigInt: ${b.toString().slice(0,10)}... ✓`;
+    });
+
+    apiTest('Uint32Array (for crypto)', true, () => {
+      const arr = new Uint32Array(4);
+      if (arr.length !== 4) throw new Error('Array length mismatch');
+      return 'Uint32Array available';
+    });
+
+    apiTest('Uint8Array (for SHA-1)', true, () => {
+      const arr = new Uint8Array(16);
+      if (arr.length !== 16) throw new Error('Array length mismatch');
+      return 'Uint8Array available';
+    });
+
+    renderResults('test-results', apiTests);
+
+    // ── SHA-1 Async Test ──
+    try {
+      const enc = new TextEncoder();
+      const data = enc.encode('password');
+      const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2,'0')).join('').toUpperCase();
+      const expected = '5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8';
+      apiTests.push({
+        name: 'SHA-1 Hash (breach check)',
+        status: hashHex === expected ? 'pass' : 'fail',
+        detail: hashHex === expected ? `"password" → ${hashHex.slice(0,10)}… ✓` : `Hash mismatch: ${hashHex.slice(0,10)}…`,
+        critical: true
+      });
+    } catch (e) {
+      apiTests.push({ name: 'SHA-1 Hash (breach check)', status: 'fail', detail: e.message, critical: true });
+    }
+
+    renderResults('test-results', apiTests);
+
+    // ── Generator Tests ──
+    const genTests = [];
+
+    function genTest(name, fn) {
+      try { const d = fn(); genTests.push({ name, status: 'pass', detail: d || 'OK', critical: false }); }
+      catch(e) { genTests.push({ name, status: 'fail', detail: e.message, critical: false }); }
+    }
+
+    genTest('generatePassword() default', () => {
+      const pw = Generator.generatePassword({ length: 16 });
+      if (pw.length !== 16) throw new Error(`Expected 16, got ${pw.length}`);
+      if (typeof pw !== 'string') throw new Error('Not a string');
+      return `"${pw.slice(0,8)}…" (${pw.length} chars)`;
+    });
+
+    genTest('generatePassword() all types', () => {
+      const pw = Generator.generatePassword({ length: 20, uppercase:true, lowercase:true, numbers:true, symbols:true, mustIncludeEachType:true });
+      const hasUpper = /[A-Z]/.test(pw);
+      const hasLower = /[a-z]/.test(pw);
+      const hasNum = /[0-9]/.test(pw);
+      const hasSym = /[^A-Za-z0-9]/.test(pw);
+      if (!hasUpper || !hasLower || !hasNum || !hasSym) throw new Error(`Missing types: upper=${hasUpper} lower=${hasLower} num=${hasNum} sym=${hasSym}`);
+      return `All 4 types present ✓`;
+    });
+
+    genTest('generatePassword() NO Math.random()', () => {
+      const orig = Math.random;
+      let mathRandomCalled = false;
+      Math.random = () => { mathRandomCalled = true; return orig(); };
+      Generator.generatePassword({ length: 32 });
+      Math.random = orig;
+      if (mathRandomCalled) throw new Error('Math.random() was called! Not cryptographically secure!');
+      return 'Math.random() never called ✓';
+    });
+
+    genTest('generatePassword() excludeSimilar', () => {
+      let found = false;
+      for (let i = 0; i < 50; i++) {
+        const pw = Generator.generatePassword({ length: 20, excludeSimilar: true });
+        if (/[iIlL1oO0]/.test(pw)) { found = true; break; }
+      }
+      if (found) throw new Error('Similar chars found in output');
+      return 'No similar chars in 50 samples ✓';
+    });
+
+    genTest('generatePassword() hex mode', () => {
+      const pw = Generator.generatePassword({ length: 32, hexMode: true });
+      if (!/^[0-9A-F]+$/.test(pw)) throw new Error('Non-hex chars found');
+      return `"${pw.slice(0,8)}…" hex only ✓`;
+    });
+
+    genTest('generatePassphrase()', () => {
+      const pp = Generator.generatePassphrase({ wordCount: 4, separator: '-', capitalize: true });
+      const parts = pp.split('-');
+      if (parts.length < 4) throw new Error(`Expected 4 words, got ${parts.length}`);
+      return `"${pp.slice(0,20)}…" (${parts.length} words)`;
+    });
+
+    genTest('generatePIN() length', () => {
+      [4,6,8].forEach(len => {
+        const pin = Generator.generatePIN(len);
+        if (pin.length !== len) throw new Error(`Expected ${len}, got ${pin.length}`);
+        if (!/^\d+$/.test(pin)) throw new Error('Non-digit chars in PIN');
+      });
+      return '4/6/8 digit PINs correct ✓';
+    });
+
+    genTest('generatePIN() no common PINs', () => {
+      const common = ['0000','1234','1111','123456'];
+      let found = false;
+      for (let i = 0; i < 100; i++) {
+        const pin = Generator.generatePIN(4, { excludeCommon: true });
+        if (common.includes(pin)) { found = true; break; }
+      }
+      if (found) throw new Error('Common PIN found in 100 samples');
+      return 'No common PINs in 100 samples ✓';
+    });
+
+    genTest('generateUsername()', () => {
+      const names = Generator.generateUsername('gaming', 'camel', true);
+      if (names.length !== 5) throw new Error(`Expected 5, got ${names.length}`);
+      if (names.some(n => n.length === 0)) throw new Error('Empty username found');
+      return `[${names[0]}, ${names[1]}, …] ✓`;
+    });
+
+    genTest('generateAPIKey() UUID v4', () => {
+      const uuid = Generator.generateAPIKey('uuid');
+      const re = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+      if (!re.test(uuid)) throw new Error(`Invalid UUID: ${uuid}`);
+      return `${uuid} ✓`;
+    });
+
+    genTest('generateAPIKey() Hex 32 (64 chars)', () => {
+      const key = Generator.generateAPIKey('hex32');
+      if (key.length !== 32) throw new Error(`Expected 32, got ${key.length}`);
+      if (!/^[0-9a-f]+$/i.test(key)) throw new Error('Non-hex chars');
+      return `${key.slice(0,12)}… (${key.length} chars) ✓`;
+    });
+
+    genTest('generateAPIKey() Hex 64 (128 chars)', () => {
+      const key = Generator.generateAPIKey('hex64');
+      if (key.length !== 64) throw new Error(`Expected 64, got ${key.length}`);
+      return `${key.slice(0,12)}… (${key.length} chars) ✓`;
+    });
+
+    genTest('generateBulk() count', () => {
+      const pws = Generator.generateBulk(10, { length: 16 });
+      if (pws.length !== 10) throw new Error(`Expected 10, got ${pws.length}`);
+      const unique = new Set(pws);
+      if (unique.size < 9) throw new Error(`Too many duplicates: ${unique.size} unique out of 10`);
+      return `10 passwords, ${unique.size} unique ✓`;
+    });
+
+    genTest('localStorage history save/load', () => {
+      Generator.clearHistory();
+      Generator.saveToHistory('TestPass123!', 'password');
+      Generator.saveToHistory('another-test-pass', 'passphrase');
+      const hist = Generator.getHistory();
+      if (hist.length !== 2) throw new Error(`Expected 2, got ${hist.length}`);
+      Generator.clearHistory();
+      return `Saved and loaded ${hist.length} entries ✓`;
+    });
+
+    renderResults('gen-results', genTests);
+
+    // ── Strength Tests ──
+    const strTests = [];
+
+    function strTest(name, fn) {
+      try { const d = fn(); strTests.push({ name, status: 'pass', detail: d || 'OK', critical: false }); }
+      catch(e) { strTests.push({ name, status: 'fail', detail: e.message, critical: false }); }
+    }
+
+    strTest('"password" → Very Weak', () => {
+      const r = PasswordStrength.analyze('password');
+      if (r.grade !== 'weak') throw new Error(`Expected weak, got ${r.grade} (score: ${r.score})`);
+      return `Score: ${r.score}, Grade: ${r.grade} ✓`;
+    });
+
+    strTest('"123456" → Very Weak', () => {
+      const r = PasswordStrength.analyze('123456');
+      if (r.grade !== 'weak') throw new Error(`Expected weak, got ${r.grade}`);
+      return `Score: ${r.score} ✓`;
+    });
+
+    strTest('"Tr0ub4dor&3" → Good+', () => {
+      const r = PasswordStrength.analyze('Tr0ub4dor&3');
+      if (r.score < 40) throw new Error(`Score too low: ${r.score}`);
+      return `Score: ${r.score}, Grade: ${r.grade} ✓`;
+    });
+
+    strTest('"X9#kP2mQr7vL!nW4" → Strong', () => {
+      const r = PasswordStrength.analyze('X9#kP2mQr7vL!nW4');
+      if (r.grade !== 'strong') throw new Error(`Expected strong, got ${r.grade} (score: ${r.score})`);
+      return `Score: ${r.score} ✓`;
+    });
+
+    strTest('Sequential detection (abc, 123)', () => {
+      const r1 = PasswordStrength.analyze('abcDefGhi');
+      const r2 = PasswordStrength.analyze('pass123456');
+      if (!r1.hasSequential) throw new Error('abc not detected');
+      if (!r2.hasSequential) throw new Error('123 not detected');
+      return 'abc and 123 detected ✓';
+    });
+
+    strTest('Repeating char detection (aaa)', () => {
+      const r = PasswordStrength.analyze('paaasword');
+      if (!r.hasRepeating) throw new Error('aaa not detected');
+      return 'Repeating chars detected ✓';
+    });
+
+    strTest('Common password flag', () => {
+      const r = PasswordStrength.analyze('letmein');
+      if (!r.isCommonPassword) throw new Error('Not flagged as common');
+      if (r.score > 15) throw new Error(`Score too high for common password: ${r.score}`);
+      return `Flagged, score capped at ${r.score} ✓`;
+    });
+
+    strTest('Entropy calculation', () => {
+      const r = PasswordStrength.analyze('Aa1!Aa1!Aa1!Aa1!'); // 16 chars, all types
+      const expectedMin = 16 * Math.log2(94);
+      if (r.entropy < 80) throw new Error(`Entropy too low: ${r.entropy.toFixed(1)} bits`);
+      return `${r.entropy.toFixed(1)} bits ✓`;
+    });
+
+    strTest('Crack time returns string', () => {
+      const r = PasswordStrength.analyze('X9#kP2mQr7vL!nW4xyz99!!');
+      if (typeof r.crackTime !== 'string') throw new Error('crackTime is not a string');
+      if (!r.crackTime.length) throw new Error('crackTime is empty');
+      return `"${r.crackTime}" ✓`;
+    });
+
+    strTest('Tips array populated for weak password', () => {
+      const r = PasswordStrength.analyze('abc');
+      if (!r.tips || r.tips.length === 0) throw new Error('No tips returned for weak password');
+      return `${r.tips.length} tips returned ✓`;
+    });
+
+    renderResults('strength-results', strTests);
+
+    // ── Summary ──
+    const allTests = [...apiTests, ...genTests, ...strTests];
+    const passed = allTests.filter(t => t.status === 'pass').length;
+    const failed = allTests.filter(t => t.status === 'fail').length;
+    const criticalFailed = allTests.filter(t => t.status === 'fail' && t.critical);
+
+    PKUtils.setText('pass-count', passed);
+    PKUtils.setText('fail-count', failed);
+    PKUtils.setText('total-count', allTests.length);
+
+    const overall = PKUtils.el('overall-status');
+    if (criticalFailed.length > 0) {
+      PKUtils.el('critical-banner').style.display = 'block';
+      overall.style.background = 'rgba(239,68,68,0.1)';
+      overall.style.border = '1px solid var(--red)';
+      overall.style.color = 'var(--red)';
+      overall.textContent = `⚠️ ${criticalFailed.length} CRITICAL FAILURE(S) — PassKit may not work correctly in this browser`;
+    } else if (failed > 0) {
+      overall.style.background = 'rgba(245,158,11,0.1)';
+      overall.style.border = '1px solid var(--yellow)';
+      overall.style.color = 'var(--yellow)';
+      overall.textContent = `⚠️ ${passed} passed, ${failed} non-critical failures — Core functionality OK`;
+    } else {
+      overall.style.background = 'rgba(16,185,129,0.1)';
+      overall.style.border = '1px solid var(--green)';
+      overall.style.color = 'var(--green-bright)';
+      overall.textContent = `✅ All ${passed} tests passed — PassKit is fully functional in this browser!`;
+    }
+  }
+
+  runAll();
+</script>
+</body>
+</html>

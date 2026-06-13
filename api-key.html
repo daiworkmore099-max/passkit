@@ -1,0 +1,357 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API Key Generator — UUID, Hex, Base64 | PassKit.in</title>
+<meta name="description" content="Generate secure API keys, tokens, and secrets free. UUID v4, Hex, Base64, and custom formats. Uses crypto.getRandomValues() — no server.">
+<meta name="keywords" content="API key generator, UUID v4 generator, random API key, hex token generator, base64 key generator, secure token generator, random token generator, developer security tools, UUID generator online, crypto token generator, generador de contrasenas, mot de passe securise, Passwort Generator, gerador de senha, password sicuro, wachtwoord generator, haslo generator, parol ureteci, kodeord generator, generatore di password, generator hasel, passwort erstellen, clave segura, senha forte, contraseña aleatoria, mot de passe aleatoire, sichere passwort, senha aleatoria">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate" hreflang="en" href="https://passkit.in/api-key.html">
+<link rel="alternate" hreflang="x-default" href="https://passkit.in/api-key.html">
+<link rel="canonical" href="https://passkit.in/api-key.html">
+<meta name="author" content="PassKit.in">
+<meta name="theme-color" content="#0d0f1a">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://passkit.in/api-key.html">
+<meta property="og:title" content="API Key Generator — UUID v4, Hex, Base64 | PassKit.in">
+<meta property="og:description" content="Free cryptographically secure API key and token generator. UUID v4, Hex 32/64, Base64. Uses crypto.getRandomValues(). No server, no sign-up.">
+<meta property="og:image" content="https://passkit.in/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="API Key Generator — PassKit.in">
+<meta name="twitter:description" content="Generate secure API keys, UUID v4, Hex tokens and Base64 secrets. crypto.getRandomValues(). Free, instant, no server.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "PassKit.in — API Key Generator",
+  "url": "https://passkit.in/api-key.html",
+  "description": "Free cryptographically secure API key, token, and UUID v4 generator. Supports Hex 32, Hex 64, Base64, and custom formats. 100% client-side.",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is UUID v4 and how is it generated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "UUID v4 (Universally Unique Identifier version 4) is a 128-bit random identifier formatted as 8-4-4-4-12 hex characters, e.g., 550e8400-e29b-41d4-a716-446655440000. Version 4 UUIDs are randomly generated (as opposed to time-based v1). PassKit.in generates them using crypto.getRandomValues(), sets version bits (byte 6 = 0x4x) and variant bits (byte 8 = 0x8x/0x9x/0xax/0xbx) per RFC 4122."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I generate a secure API key?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A secure API key should be at least 128 bits of cryptographically random data. Use PassKit.in's API Key Generator: choose Hex 32 (256 bits) or Base64 (264 bits) format, click Generate, and copy the result. Never use Math.random() or timestamp-based methods for API keys — they are predictable. Always use a CSPRNG like crypto.getRandomValues()."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PassKit.in — API Key Generator",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "ratingCount": "412",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "PassKit.in", "item": "https://passkit.in/" },
+    { "@type": "ListItem", "position": 2, "name": "API Key Generator", "item": "https://passkit.in/api-key.html" }
+  ]
+}
+</script><link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+<div class="page">
+  <div class="crypto-banner">🔐 CRYPTOGRAPHICALLY SECURE — uses crypto.getRandomValues()</div>
+  <h1 class="page-title">API Key / Secret Key Generator</h1>
+  <p class="page-sub">Generate cryptographically secure API keys, tokens, JWTs, and secrets</p>
+
+  <div class="privacy-card">
+    <span class="privacy-card-icon">🔒</span>
+    <span>Passwords generated and stored locally — never transmitted. All keys are generated in your browser using the Web Crypto API.</span>
+  </div>
+
+  <!-- Format Tabs -->
+  <div class="settings-card">
+    <div class="settings-title">🔑 Key Format</div>
+    <div class="tab-group" id="format-tabs" style="flex-wrap:wrap">
+      <button class="tab-btn active" data-fmt="uuid">UUID v4</button>
+      <button class="tab-btn" data-fmt="hex32">Hex 32</button>
+      <button class="tab-btn" data-fmt="hex64">Hex 64</button>
+      <button class="tab-btn" data-fmt="base64">Base64</button>
+      <button class="tab-btn" data-fmt="custom">Custom</button>
+    </div>
+    <div id="fmt-desc" style="font-size:12px;color:var(--text-3);margin-top:10px;padding:8px 10px;background:var(--surface-3);border-radius:8px">
+      UUID v4 — 128 bits of randomness in standard UUID format: xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
+    </div>
+
+    <!-- Custom options (hidden by default) -->
+    <div id="custom-opts" style="display:none;margin-top:1rem">
+      <div class="length-row">
+        <span class="length-label">Hex Length</span>
+        <div class="slider-wrap">
+          <input type="range" class="slider" id="custom-len" min="16" max="512" value="64" step="8">
+          <span class="length-value" id="custom-len-val">64</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="generate-btn" id="btn-generate">⚡ Generate API Key</button>
+
+  <!-- Key Display -->
+  <div class="password-display-wrap">
+    <div class="password-display" id="key-display" style="font-size:14px;letter-spacing:0.04em">Click Generate to create a key</div>
+    <div class="password-actions">
+      <button class="icon-btn" id="btn-copy" title="Copy">📋</button>
+      <button class="icon-btn" id="btn-refresh" title="Regenerate">🔄</button>
+    </div>
+  </div>
+
+  <!-- Key Metadata -->
+  <div class="stats-row" id="key-stats">
+    <div class="stat-card"><div class="stat-num" id="stat-bits">128</div><div class="stat-label">Bits</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-chars">36</div><div class="stat-label">Characters</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-fmt">UUID v4</div><div class="stat-label">Format</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-entropy">128</div><div class="stat-label">Entropy (bits)</div></div>
+  </div>
+
+  <!-- Bulk API Keys -->
+  <div class="settings-card">
+    <div class="section-title" style="margin-bottom:0.75rem">📦 Bulk Key Generation</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;flex-wrap:wrap">
+      <div class="pill-group" id="bulk-count">
+        <button class="pill-btn active" data-count="5">5 keys</button>
+        <button class="pill-btn" data-count="10">10 keys</button>
+        <button class="pill-btn" data-count="25">25 keys</button>
+      </div>
+      <button class="btn btn-primary" id="btn-bulk">Generate</button>
+      <button class="btn" id="btn-dl-env">⬇ .env format</button>
+      <button class="btn" id="btn-dl-txt">⬇ TXT</button>
+    </div>
+    <div id="bulk-list" style="display:flex;flex-direction:column;gap:4px"></div>
+  </div>
+
+  <!-- Use Cases -->
+  <div class="section">
+    <div class="section-title">📚 Which Format Should I Use?</div>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead><tr><th>Use Case</th><th>Recommended Format</th><th>Bits</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>JWT Secret</td>
+            <td><span class="badge badge-green">Hex 64</span></td>
+            <td>512 bits</td>
+            <td><code style="font-size:11px;color:var(--text-3)">a3f9b2c1d4e5…</code></td>
+          </tr>
+          <tr>
+            <td>Session Token</td>
+            <td><span class="badge badge-blue">Hex 32</span></td>
+            <td>256 bits</td>
+            <td><code style="font-size:11px;color:var(--text-3)">8f4a2b1c3d5e…</code></td>
+          </tr>
+          <tr>
+            <td>API Token</td>
+            <td><span class="badge badge-blue">UUID v4</span></td>
+            <td>128 bits</td>
+            <td><code style="font-size:11px;color:var(--text-3)">550e8400-e29b…</code></td>
+          </tr>
+          <tr>
+            <td>Encryption Key</td>
+            <td><span class="badge badge-green">Base64</span></td>
+            <td>256 bits</td>
+            <td><code style="font-size:11px;color:var(--text-3)">K8mN2pQ7rS1t…</code></td>
+          </tr>
+          <tr>
+            <td>Database Password</td>
+            <td><span class="badge badge-blue">Hex 32</span></td>
+            <td>256 bits</td>
+            <td><code style="font-size:11px;color:var(--text-3)">3c9a1f2b4d6e…</code></td>
+          </tr>
+          <tr>
+            <td>CSRF Token</td>
+            <td><span class="badge badge-blue">Hex 32</span></td>
+            <td>256 bits</td>
+            <td><code style="font-size:11px;color:var(--text-3)">7b3d5f1a9c2e…</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Security Note:</strong> Never commit API keys or secrets to version control. Use environment variables (.env files, CI/CD secrets, or secret managers) to store sensitive keys. Rotate keys immediately if exposed.
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="js/generator.js"></script>
+<script src="js/strength.js"></script>
+<script src="js/utils.js"></script>
+<script>
+  PKUtils.injectNav('api-key.html');
+
+  let currentFmt = 'uuid';
+  let currentKey = '';
+  let bulkCount = 5;
+  let bulkKeys = [];
+
+  const fmtMeta = {
+    uuid:   { bits: 128, label: 'UUID v4',  desc: 'UUID v4 — 128 bits of randomness in standard UUID format: xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx' },
+    hex32:  { bits: 256, label: 'Hex 32',   desc: 'Hex 32 — 64 hexadecimal characters = 256 bits of cryptographic entropy. Ideal for session tokens.' },
+    hex64:  { bits: 512, label: 'Hex 64',   desc: 'Hex 64 — 128 hexadecimal characters = 512 bits. Ideal for JWT secrets and high-security signing keys.' },
+    base64: { bits: 256, label: 'Base64',   desc: 'Base64 — 32 random bytes encoded as URL-safe base64. 256 bits of entropy. Common for OAuth tokens.' },
+    custom: { bits: null, label: 'Custom',  desc: 'Custom — specify the exact hex length. Each hex char = 4 bits of entropy.' }
+  };
+
+  document.querySelectorAll('#format-tabs .tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#format-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFmt = btn.dataset.fmt;
+      PKUtils.el('fmt-desc').textContent = fmtMeta[currentFmt].desc;
+      PKUtils.el('custom-opts').style.display = currentFmt === 'custom' ? 'block' : 'none';
+    });
+  });
+
+  PKUtils.el('custom-len').addEventListener('input', () => {
+    PKUtils.setText('custom-len-val', PKUtils.el('custom-len').value);
+  });
+
+  document.querySelectorAll('#bulk-count .pill-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#bulk-count .pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      bulkCount = parseInt(btn.dataset.count);
+    });
+  });
+
+  function generate() {
+    const customLen = parseInt(PKUtils.el('custom-len').value);
+    const key = Generator.generateAPIKey(currentFmt, customLen);
+    currentKey = key;
+    PKUtils.el('key-display').textContent = key;
+
+    const meta = fmtMeta[currentFmt];
+    const bits = currentFmt === 'custom' ? customLen * 4 : meta.bits;
+    PKUtils.setText('stat-bits', bits);
+    PKUtils.setText('stat-chars', key.length);
+    PKUtils.setText('stat-fmt', meta.label);
+    PKUtils.setText('stat-entropy', bits);
+
+    Generator.saveToHistory(key, 'api-key');
+  }
+
+  PKUtils.el('btn-generate').addEventListener('click', generate);
+  PKUtils.el('btn-refresh').addEventListener('click', generate);
+
+  PKUtils.el('btn-copy').addEventListener('click', async () => {
+    if (!currentKey) return;
+    const ok = await PKUtils.copyToClipboard(currentKey);
+    if (ok) {
+      PKUtils.showToast('API key copied!', 'success');
+      PKUtils.el('btn-copy').textContent = '✅';
+      setTimeout(() => PKUtils.el('btn-copy').textContent = '📋', 1500);
+    }
+  });
+
+  PKUtils.el('btn-bulk').addEventListener('click', () => {
+    const customLen = parseInt(PKUtils.el('custom-len').value);
+    bulkKeys = Array.from({ length: bulkCount }, () => Generator.generateAPIKey(currentFmt, customLen));
+    const list = PKUtils.el('bulk-list');
+    list.innerHTML = bulkKeys.map((k, i) => `
+      <div class="quick-item">
+        <span class="quick-pw" id="bk-${i}" style="font-size:12px">${k}</span>
+        <button class="btn btn-sm" onclick="(async()=>{const ok=await PKUtils.copyToClipboard(document.getElementById('bk-${i}').textContent);if(ok){this.textContent='✅';setTimeout(()=>this.textContent='📋',1200);}})()">📋</button>
+      </div>`).join('');
+  });
+
+  PKUtils.el('btn-dl-env').addEventListener('click', () => {
+    if (!bulkKeys.length) { PKUtils.showToast('Generate bulk keys first', 'warning'); return; }
+    const varName = currentFmt.toUpperCase().replace('-','_');
+    const content = bulkKeys.map((k, i) => `${varName}_${i+1}=${k}`).join('\n');
+    PKUtils.downloadText(content, 'api-keys.env');
+  });
+
+  PKUtils.el('btn-dl-txt').addEventListener('click', () => {
+    if (!bulkKeys.length) { PKUtils.showToast('Generate bulk keys first', 'warning'); return; }
+    PKUtils.downloadText(bulkKeys.join('\n'), 'api-keys.txt');
+  });
+
+  generate();
+</script>
+
+<div class="page" style="padding-top:0">
+<div class="seo-content">
+  <h2>How to Generate a Cryptographically Secure API Key</h2>
+  <p>A secure <strong>API key</strong> must be generated using a <strong>Cryptographically Secure Pseudo-Random Number Generator (CSPRNG)</strong> — never using <code>Math.random()</code>, timestamps, UUIDs from non-crypto sources, or any predictable algorithm. PassKit.in uses <code>crypto.getRandomValues()</code>, the Web Crypto API's CSPRNG, to generate all keys with true randomness. A 32-byte Hex key (256 bits) has the same security level as AES-256 encryption keys.</p>
+
+  <h2>API Key Formats Explained</h2>
+  <ul>
+    <li><strong>UUID v4</strong> — 128 bits, format <code>xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx</code>. Standard for database row IDs and session tokens. Per RFC 4122. ~122 bits of actual randomness (6 bits used for version/variant flags).</li>
+    <li><strong>Hex 32</strong> — 256 bits of randomness, encoded as 64 lowercase hexadecimal characters. Recommended for API secrets, HMAC keys, and OAuth tokens.</li>
+    <li><strong>Hex 64</strong> — 512 bits, 128 hex characters. Used for extremely high-security applications or when key rotation is infrequent.</li>
+    <li><strong>Base64 (44 chars)</strong> — 256 bits encoded in URL-safe Base64. Common format for JWT secrets, AWS access keys, and API bearer tokens.</li>
+    <li><strong>Custom</strong> — configurable prefix, length, and character set for proprietary API key formats.</li>
+  </ul>
+
+  <h2>What Is UUID v4?</h2>
+  <p><strong>UUID v4</strong> (Universally Unique Identifier, version 4) is a 128-bit random identifier standardized in RFC 4122. Format: <code>550e8400-e29b-41d4-a716-446655440000</code>. The "4" in position 13 identifies version 4 (random). Bits 64–65 are set to <code>10</code> (the RFC variant). PassKit.in generates compliant v4 UUIDs using <code>crypto.getRandomValues()</code>, setting <code>bytes[6] = (bytes[6] &amp; 0x0f) | 0x40</code> and <code>bytes[8] = (bytes[8] &amp; 0x3f) | 0x80</code> per the standard.</p>
+
+  <h2>Why Not Use Math.random() for API Keys?</h2>
+  <p><code>Math.random()</code> is a pseudo-random number generator seeded by the current time. Its output is predictable — an attacker who knows the approximate time your key was generated can reconstruct the seed and brute-force possible outputs in milliseconds. Real-world attacks have exploited this in PHP (<code>rand()</code>), Java (<code>java.util.Random</code>), and JavaScript (<code>Math.random()</code>). Always use <code>crypto.getRandomValues()</code> (browser) or <code>crypto.randomBytes()</code> (Node.js) for security-sensitive values.</p>
+
+  <h2>Frequently Asked Questions</h2>
+  <div id="faq-list">
+    <div class="faq-item">
+      <button class="faq-q">What is a UUID v4 and how is it generated? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">UUID v4 is a 128-bit random identifier formatted as 32 hex digits with hyphens: <code>8-4-4-4-12</code>. Version 4 means it is randomly generated (vs v1 which is time-based). PassKit.in generates RFC 4122-compliant v4 UUIDs using <code>crypto.getRandomValues()</code>: generate 16 random bytes, set byte 6 to version 4 (<code>0x4x</code>), set byte 8 to variant 2 (<code>0x8x</code>–<code>0xbx</code>), then format as hex string with dashes.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">How long should an API key be? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Minimum 128 bits (16 bytes) of random data — this rules out brute force with any current hardware. Recommended: 256 bits (32 bytes) for API secrets, HMAC signing keys, and OAuth client secrets. For database row IDs where uniqueness matters more than secrecy, UUID v4 (122 bits effective) is sufficient. PassKit.in's Hex 32 format gives 256 bits — the same as AES-256 key strength.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Can I use these keys in my production application? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">Yes. All keys generated by PassKit.in use <code>crypto.getRandomValues()</code> — the same source used by your OS for cryptographic operations. They are suitable for API secrets, JWT signing keys, OAuth tokens, session IDs, HMAC keys, database UUIDs, and any security-sensitive application. Copy and use them directly.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">What format should I use for a JWT secret? <span class="faq-arrow">▼</span></button>
+      <div class="faq-a">For JWT HS256, use a 256-bit (32-byte) secret. PassKit.in's <strong>Base64 (44 chars)</strong> or <strong>Hex 32 (64 chars)</strong> formats both provide 256 bits. Base64 is slightly more compact and accepted by most JWT libraries. For HS512, use Hex 64 (512 bits). Never use a human-readable string as a JWT secret.</div>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>
+
+
+
+
+

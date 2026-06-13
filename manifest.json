@@ -1,0 +1,12 @@
+{
+  "name": "PassKit.in — Free Password Generator",
+  "short_name": "PassKit",
+  "description": "Free password security suite. Generate strong passwords, test strength, check breaches. 100% browser-based.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0f1a",
+  "theme_color": "#7b61ff",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

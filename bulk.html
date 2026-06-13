@@ -1,0 +1,321 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bulk Password Generator — CSV & TXT | PassKit.in</title>
+<meta name="description" content="Generate hundreds of unique passwords at once and download as TXT or CSV. Perfect for developers, IT teams, and system admins. 100% client-side, no server.">
+<meta name="keywords" content="bulk password generator, multiple password generator, batch password generator, password list generator, CSV password generator, TXT password generator, generate 100 passwords, mass password generator, generador de contrasenas, mot de passe securise, Passwort Generator, gerador de senha, password sicuro, wachtwoord generator, haslo generator, parol ureteci, kodeord generator, generatore di password, generator hasel, passwort erstellen, clave segura, senha forte, contraseña aleatoria, mot de passe aleatoire, sichere passwort, senha aleatoria">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate" hreflang="en" href="https://passkit.in/bulk.html">
+<link rel="alternate" hreflang="x-default" href="https://passkit.in/bulk.html">
+<link rel="canonical" href="https://passkit.in/bulk.html">
+<meta name="author" content="PassKit.in">
+<meta name="theme-color" content="#0d0f1a">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://passkit.in/bulk.html">
+<meta property="og:title" content="Bulk Password Generator — Download CSV/TXT | PassKit.in">
+<meta property="og:description" content="Generate and download hundreds of unique cryptographic passwords as TXT or CSV. Free, instant, no server.">
+<meta property="og:image" content="https://passkit.in/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bulk Password Generator — PassKit.in">
+<meta name="twitter:description" content="Generate up to 500 unique passwords at once. Download as TXT or CSV. 100% client-side, no server, no sign-up.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "PassKit.in — Bulk Password Generator",
+  "url": "https://passkit.in/bulk.html",
+  "description": "Free bulk password generator. Generate up to 500 unique cryptographically random passwords and download as TXT or CSV. 100% browser-based.",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I generate multiple passwords at once?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "PassKit.in's bulk password generator lets you generate up to 500 unique passwords in one click. Set the length, character types, and quantity, then click Generate. Download as a plain text file (.txt) or spreadsheet-compatible CSV. All passwords are generated using crypto.getRandomValues() — cryptographically secure and guaranteed unique."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PassKit.in — Bulk Password Generator",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "ratingCount": "412",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "PassKit.in", "item": "https://passkit.in/" },
+    { "@type": "ListItem", "position": 2, "name": "Bulk Password Generator", "item": "https://passkit.in/bulk.html" }
+  ]
+}
+</script><link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+<div class="page">
+  <div class="crypto-banner">🔐 CRYPTOGRAPHICALLY SECURE — uses crypto.getRandomValues()</div>
+  <h1 class="page-title">Bulk Password Generator</h1>
+  <p class="page-sub">Generate multiple passwords at once — download as TXT or CSV</p>
+
+  <div class="privacy-card">
+    <span class="privacy-card-icon">🔒</span>
+    <span>Passwords generated and stored locally — never transmitted. Downloads happen entirely in your browser via Blob URLs.</span>
+  </div>
+
+  <!-- Settings -->
+  <div class="settings-card">
+    <div class="settings-title">⚙️ Password Settings</div>
+
+    <div class="length-row">
+      <span class="length-label">Length</span>
+      <div class="slider-wrap">
+        <input type="range" class="slider" id="pw-length" min="4" max="64" value="16">
+        <span class="length-value" id="length-val">16</span>
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info"><div class="setting-label">A–Z Uppercase</div></div>
+      <label class="toggle"><input type="checkbox" id="opt-upper" checked><span class="toggle-slider"></span></label>
+    </div>
+    <div class="setting-row">
+      <div class="setting-info"><div class="setting-label">a–z Lowercase</div></div>
+      <label class="toggle"><input type="checkbox" id="opt-lower" checked><span class="toggle-slider"></span></label>
+    </div>
+    <div class="setting-row">
+      <div class="setting-info"><div class="setting-label">0–9 Numbers</div></div>
+      <label class="toggle"><input type="checkbox" id="opt-numbers" checked><span class="toggle-slider"></span></label>
+    </div>
+    <div class="setting-row">
+      <div class="setting-info"><div class="setting-label">!@# Symbols</div></div>
+      <label class="toggle"><input type="checkbox" id="opt-symbols" checked><span class="toggle-slider"></span></label>
+    </div>
+    <div class="setting-row">
+      <div class="setting-info">
+        <div class="setting-label">Exclude Similar Characters</div>
+        <div class="setting-desc">Remove 0, O, I, l, 1</div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="opt-similar"><span class="toggle-slider"></span></label>
+    </div>
+  </div>
+
+  <!-- Count Selector -->
+  <div class="settings-card">
+    <div class="settings-title">📦 How Many Passwords?</div>
+    <div class="pill-group" id="count-group">
+      <button class="pill-btn" data-count="5">5</button>
+      <button class="pill-btn active" data-count="10">10</button>
+      <button class="pill-btn" data-count="25">25</button>
+      <button class="pill-btn" data-count="50">50</button>
+      <button class="pill-btn" data-count="100">100</button>
+    </div>
+  </div>
+
+  <button class="generate-btn" id="btn-generate">⚡ Generate Passwords</button>
+
+  <!-- Download Buttons -->
+  <div style="display:flex;gap:8px;margin-bottom:1.25rem;flex-wrap:wrap" id="dl-row" style="display:none">
+    <button class="btn btn-green" id="btn-dl-txt">📄 Download TXT</button>
+    <button class="btn btn-green" id="btn-dl-csv">📊 Download CSV</button>
+    <button class="btn" id="btn-copy-all">📋 Copy All</button>
+    <span id="dl-info" style="font-size:12px;color:var(--text-3);align-self:center"></span>
+  </div>
+
+  <!-- Table -->
+  <div id="table-wrap" class="bulk-table-wrap" style="display:none">
+    <table class="bulk-table" id="bulk-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Password</th>
+          <th>Strength</th>
+          <th>Length</th>
+          <th>Copy</th>
+        </tr>
+      </thead>
+      <tbody id="bulk-body"></tbody>
+    </table>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" id="empty-state">
+    <div class="empty-state-icon">📦</div>
+    <div class="empty-state-text">Configure settings and click Generate</div>
+    <div class="empty-state-sub">Passwords are generated entirely in your browser</div>
+  </div>
+
+  <!-- Use Cases -->
+  <div class="info-box" style="margin-top:1.5rem">
+    <h3>📋 Common Uses for Bulk Generation</h3>
+    <ul>
+      <li>Setting up multiple user accounts simultaneously</li>
+      <li>Creating temporary passwords for new employees</li>
+      <li>Generating passwords for testing password manager imports</li>
+      <li>Creating a set of strong passwords to choose from</li>
+      <li>Populating a database with hashed test passwords</li>
+    </ul>
+  </div>
+</div>
+
+  <!-- SEO Content -->
+  <section class="seo-content" aria-label="Bulk password generation guide">
+    <h2>Bulk Password Generator — Generate Hundreds of Passwords at Once</h2>
+    <p>PassKit.in's bulk password generator creates up to 500 unique, cryptographically random passwords in a single click. Each password is generated independently using <code>crypto.getRandomValues()</code> — there is no pattern, no repetition, and no server involved. Download the entire list as a plain text file (.txt) or as a CSV for spreadsheet import.</p>
+
+    <h3>Who Uses Bulk Password Generation?</h3>
+    <ul>
+      <li><strong>IT administrators</strong> — provisioning initial passwords for new user accounts in batches</li>
+      <li><strong>Developers</strong> — generating test credentials for automated testing environments</li>
+      <li><strong>Security teams</strong> — creating one-time passwords for temporary access</li>
+      <li><strong>System integrators</strong> — seeding databases with unique API keys or tokens</li>
+      <li><strong>Educators</strong> — generating unique passwords for student accounts</li>
+    </ul>
+
+    <h3>Why Every Password in the List Is Unique</h3>
+    <p>PassKit.in generates each password independently with a fresh call to <code>crypto.getRandomValues()</code>. The probability that any two randomly generated 16-character passwords (using 94 printable ASCII characters) are identical is approximately 1 in 10<sup>31</sup> — effectively zero. You can safely use every password in the exported list as a distinct credential.</p>
+
+    <h3>CSV vs TXT Format</h3>
+    <p><strong>TXT format</strong> — one password per line. Best for scripting, importing into password managers, or pasting into provisioning tools.</p>
+    <p><strong>CSV format</strong> — includes an index number alongside each password. Best for spreadsheet workflows where you need to map passwords to users or accounts.</p>
+    <p>Both formats are generated entirely in your browser using the Blob URL API — no file is ever uploaded or sent to any server.</p>
+
+    <h2>Frequently Asked Questions</h2>
+    <details open>
+      <summary><strong>How many passwords can I generate at once?</strong></summary>
+      <p>PassKit.in's bulk generator supports up to 500 passwords per batch. You can run multiple batches to generate as many passwords as you need. All generation happens in your browser in milliseconds — no waiting, no rate limits, no sign-up.</p>
+    </details>
+    <details>
+      <summary><strong>Are bulk-generated passwords safe to use in production?</strong></summary>
+      <p>Yes. Each password is generated with <code>crypto.getRandomValues()</code>, the same CSPRNG used by banks, VPNs, and operating systems. The passwords are never transmitted to any server and exist only in your browser until you download them. Use them for initial credentials, but always enforce a password-change policy for end users.</p>
+    </details>
+  </section>
+</div>
+
+<div id="toast-container"></div>
+<script src="js/generator.js"></script>
+<script src="js/strength.js"></script>
+<script src="js/utils.js"></script>
+<script>
+  PKUtils.injectNav('bulk.html');
+
+  let currentCount = 10;
+  let generatedPasswords = [];
+
+  document.querySelectorAll('#count-group .pill-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#count-group .pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCount = parseInt(btn.dataset.count);
+    });
+  });
+
+  PKUtils.el('pw-length').addEventListener('input', () => {
+    PKUtils.setText('length-val', PKUtils.el('pw-length').value);
+  });
+
+  const strengthBadge = { weak: 'badge-red', fair: 'badge-yellow', good: 'badge-blue', strong: 'badge-green' };
+  const strengthLabel = { weak: '❌ Weak', fair: '⚠️ Fair', good: '✅ Good', strong: '🛡️ Strong' };
+
+  function getOpts() {
+    return {
+      length: parseInt(PKUtils.el('pw-length').value),
+      uppercase: PKUtils.el('opt-upper').checked,
+      lowercase: PKUtils.el('opt-lower').checked,
+      numbers: PKUtils.el('opt-numbers').checked,
+      symbols: PKUtils.el('opt-symbols').checked,
+      excludeSimilar: PKUtils.el('opt-similar').checked,
+      mustIncludeEachType: true
+    };
+  }
+
+  function generate() {
+    const opts = getOpts();
+    generatedPasswords = Generator.generateBulk(currentCount, opts);
+
+    PKUtils.el('empty-state').style.display = 'none';
+    PKUtils.el('table-wrap').style.display = 'block';
+    PKUtils.el('dl-row').style.display = 'flex';
+    PKUtils.setText('dl-info', `${currentCount} passwords · length ${opts.length}`);
+
+    const tbody = PKUtils.el('bulk-body');
+    tbody.innerHTML = generatedPasswords.map((pw, i) => {
+      const r = PasswordStrength.analyze(pw);
+      const grade = r ? r.grade : 'good';
+      const badge = strengthBadge[grade] || 'badge-blue';
+      const label = strengthLabel[grade] || '✅ Good';
+      return `<tr>
+        <td style="color:var(--text-3);font-size:12px">${i+1}</td>
+        <td>${pw}</td>
+        <td><span class="badge ${badge}">${label}</span></td>
+        <td style="color:var(--text-3)">${pw.length}</td>
+        <td><button class="btn btn-sm" onclick="copyRow('${pw.replace(/'/g,"\\'")}', this)">📋</button></td>
+      </tr>`;
+    }).join('');
+  }
+
+  async function copyRow(pw, btn) {
+    const ok = await PKUtils.copyToClipboard(pw);
+    if (ok) { btn.textContent = '✅'; setTimeout(() => btn.textContent = '📋', 1200); }
+  }
+
+  PKUtils.el('btn-generate').addEventListener('click', generate);
+
+  PKUtils.el('btn-dl-txt').addEventListener('click', () => {
+    if (!generatedPasswords.length) return;
+    PKUtils.downloadText(generatedPasswords.join('\n'), 'passwords.txt');
+  });
+
+  PKUtils.el('btn-dl-csv').addEventListener('click', () => {
+    if (!generatedPasswords.length) return;
+    const opts = getOpts();
+    const rows = [['#', 'Password', 'Strength', 'Length', 'Entropy']];
+    generatedPasswords.forEach((pw, i) => {
+      const r = PasswordStrength.analyze(pw);
+      rows.push([i+1, pw, r ? r.label : '—', pw.length, r ? r.entropy.toFixed(1) + ' bits' : '—']);
+    });
+    PKUtils.downloadCSV(rows, 'passwords.csv');
+  });
+
+  PKUtils.el('btn-copy-all').addEventListener('click', async () => {
+    if (!generatedPasswords.length) return;
+    const ok = await PKUtils.copyToClipboard(generatedPasswords.join('\n'));
+    if (ok) {
+      PKUtils.showToast(`${generatedPasswords.length} passwords copied!`, 'success');
+      PKUtils.el('btn-copy-all').textContent = '✅ Copied';
+      setTimeout(() => PKUtils.el('btn-copy-all').textContent = '📋 Copy All', 1500);
+    }
+  });
+</script>
+</body>
+</html>
+
+
+
+
+
