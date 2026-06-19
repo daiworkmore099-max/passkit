@@ -1,4 +1,4 @@
-User-agent: *
+﻿User-agent: *
 Allow: /
 
-Sitemap: https://passkit.in/sitemap.xml
+Sitemap: https://passkit.ink/sitemap.xml

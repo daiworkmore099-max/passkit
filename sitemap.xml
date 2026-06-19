@@ -1,72 +1,72 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://passkit.in/</loc>
+    <loc>https://passkit.ink/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://passkit.in/passphrase.html</loc>
+    <loc>https://passkit.ink/passphrase.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://passkit.in/strength-test.html</loc>
+    <loc>https://passkit.ink/strength-test.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://passkit.in/breach-check.html</loc>
+    <loc>https://passkit.ink/breach-check.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://passkit.in/api-key.html</loc>
+    <loc>https://passkit.ink/api-key.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://passkit.in/wifi-password.html</loc>
+    <loc>https://passkit.ink/wifi-password.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://passkit.in/pin.html</loc>
+    <loc>https://passkit.ink/pin.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://passkit.in/username.html</loc>
+    <loc>https://passkit.ink/username.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://passkit.in/bulk.html</loc>
+    <loc>https://passkit.ink/bulk.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://passkit.in/history.html</loc>
+    <loc>https://passkit.ink/history.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://passkit.in/es/</loc>
+    <loc>https://passkit.ink/es/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://passkit.in/fr/</loc>
+    <loc>https://passkit.ink/fr/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://passkit.in/de/</loc>
+    <loc>https://passkit.ink/de/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://passkit.in/pt/</loc>
+    <loc>https://passkit.ink/pt/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
