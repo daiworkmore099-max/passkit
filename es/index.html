@@ -1,37 +1,37 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Password Generator — Secure & Random | PassKit.in</title>
-<meta name="description" content="Free password generator using crypto.getRandomValues(). Strong, random passwords with 10 free security tools — no ads, no tracking, no server.">
-<meta name="keywords" content="password generator, free password generator, random password generator, strong password generator, secure password generator, online password generator, cryptographically secure password, password generator no sign up, password generator no account, generador de contrasenas, mot de passe securise, Passwort Generator, gerador de senha, password sicuro, wachtwoord generator, haslo generator, parol ureteci, kodeord generator, generatore di password, generator hasel, passwort erstellen, clave segura, senha forte, contraseña aleatoria, mot de passe aleatoire, sichere passwort, senha aleatoria">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Generador de Contrasenas Gratis - Seguro y Aleatorio | PassKit.in</title>
+<meta name="description" content="Generador de contrasenas gratuito con crypto.getRandomValues(). Contrasenas fuertes y aleatorias con 10 herramientas de seguridad gratis.">
+<meta name="keywords" content="generador de contrasenas, generador de contrasenas gratis, contrasena segura, contrasena aleatoria">
+<link rel="manifest" href="../manifest.json">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="alternate" hreflang="en" href="https://passkit.in/">
 <link rel="alternate" hreflang="es" href="https://passkit.in/es/">
 <link rel="alternate" hreflang="fr" href="https://passkit.in/fr/">
 <link rel="alternate" hreflang="de" href="https://passkit.in/de/">
 <link rel="alternate" hreflang="pt" href="https://passkit.in/pt/">
 <link rel="alternate" hreflang="x-default" href="https://passkit.in/">
-<link rel="canonical" href="https://passkit.in/">
+<link rel="canonical" href="https://passkit.in/es/">
 <meta name="author" content="PassKit.in">
 <meta name="theme-color" content="#0d0f1a">
 <meta name="robots" content="index, follow">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://passkit.in/">
-<meta property="og:title" content="Free Password Generator — Cryptographically Secure | PassKit.in">
-<meta property="og:description" content="Generate strong random passwords instantly. 100% client-side, no server, no account. Uses Web Crypto API — the same standard used by banks and security software.">
+<meta property="og:url" content="https://passkit.in/es/">
+<meta property="og:title" content="Generador de Contrasenas Gratis | PassKit.in">
+<meta property="og:description" content="Genera contrasenas fuertes y aleatorias al instante. 100% del lado del cliente.">
 <meta property="og:image" content="https://passkit.in/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Free Password Generator — PassKit.in">
-<meta name="twitter:description" content="100% free, cryptographically secure password generator. No sign-up. Passwords never leave your browser.">
+<meta name="twitter:title" content="Generador de Contrasenas Gratis - PassKit.in">
+<meta name="twitter:description" content="Generador de contrasenas 100% gratuito y criptograficamente seguro.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "PassKit.in — Free Password Generator",
-  "url": "https://passkit.in/",
+  "url": "https://passkit.in/es/",
   "description": "Free cryptographically secure password generator. 100% client-side using Web Crypto API. Passwords never transmitted to any server.",
   "applicationCategory": "SecurityApplication",
   "operatingSystem": "Any",
@@ -132,10 +132,10 @@
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "PassKit.in", "item": "https://passkit.in/" }
+    { "@type": "ListItem", "position": 1, "name": "PassKit.in", "item": "https://passkit.in/es/" }
   ]
 }
-</script><link rel="stylesheet" href="css/main.css">
+</script><link rel="stylesheet" href="../css/main.css">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D29GQYDRR2"></script>
 <script>
@@ -148,13 +148,13 @@
 <div id="nav-placeholder"></div>
 
 <div class="page">
-  <div class="crypto-banner">🔐 CRYPTOGRAPHICALLY SECURE — uses crypto.getRandomValues()</div>
-  <h1 class="page-title">Password Generator</h1>
-  <p class="page-sub">Generate secure, random passwords instantly — client-side only, never transmitted</p>
+  <div class="crypto-banner">🔐 CRIPTOGRAFICAMENTE SEGURO - usa crypto.getRandomValues()</div>
+  <h1 class="page-title">Generador de Contrasenas</h1>
+  <p class="page-sub">Genera contrasenas seguras y aleatorias al instante - solo en tu navegador, nunca transmitidas</p>
 
   <div class="privacy-card">
     <span class="privacy-card-icon">🔒</span>
-    <span>Your passwords <strong>never leave your device</strong>. All generation happens in your browser using the Web Crypto API. Zero server involvement.</span>
+    <span>Tus contrasenas nunca salen de tu dispositivo. Toda la generacion ocurre en tu navegador usando la Web Crypto API.</span>
   </div>
 
   <!-- Password Display -->
@@ -164,7 +164,7 @@
       <button class="icon-btn" id="btn-copy" title="Copy password">📋</button>
       <button class="icon-btn" id="btn-refresh" title="Regenerate">🔄</button>
       <button class="icon-btn" id="btn-qr" title="Show QR Code">📱</button>
-      <button class="icon-btn" id="btn-history" title="Save to history" onclick="window.location.href='history.html'">📜</button>
+      <button class="icon-btn" id="btn-history" title="Save to history" onclick="window.location.href='../history.html'">📜</button>
     </div>
   </div>
 
@@ -298,14 +298,14 @@
   <div class="section">
     <div class="section-title">🧰 More Security Tools</div>
     <div class="tools-grid">
-      <a href="passphrase.html" class="tool-card"><span class="tool-icon">💬</span><div class="tool-name">Passphrase</div><div class="tool-desc">Random word combinations — memorable & strong</div></a>
-      <a href="strength-test.html" class="tool-card"><span class="tool-icon">🔬</span><div class="tool-name">Strength Tester</div><div class="tool-desc">Analyze any password in detail</div></a>
-      <a href="username.html" class="tool-card"><span class="tool-icon">👤</span><div class="tool-name">Username</div><div class="tool-desc">Unique usernames for any platform</div></a>
-      <a href="pin.html" class="tool-card"><span class="tool-icon">🔢</span><div class="tool-name">PIN Generator</div><div class="tool-desc">Secure PINs for banks & phones</div></a>
-      <a href="wifi-password.html" class="tool-card"><span class="tool-icon">📶</span><div class="tool-name">WiFi + QR</div><div class="tool-desc">WiFi password with shareable QR code</div></a>
-      <a href="api-key.html" class="tool-card"><span class="tool-icon">🔐</span><div class="tool-name">API Key</div><div class="tool-desc">UUID, hex, base64 secrets</div></a>
-      <a href="breach-check.html" class="tool-card"><span class="tool-icon">🛡️</span><div class="tool-name">Breach Check</div><div class="tool-desc">HaveIBeenPwned k-anonymity check</div></a>
-      <a href="bulk.html" class="tool-card"><span class="tool-icon">📦</span><div class="tool-name">Bulk Generator</div><div class="tool-desc">Generate 5–100 passwords, download CSV</div></a>
+      <a href="../passphrase.html" class="tool-card"><span class="tool-icon">💬</span><div class="tool-name">Passphrase</div><div class="tool-desc">Random word combinations — memorable & strong</div></a>
+      <a href="../strength-test.html" class="tool-card"><span class="tool-icon">🔬</span><div class="tool-name">Strength Tester</div><div class="tool-desc">Analyze any password in detail</div></a>
+      <a href="../username.html" class="tool-card"><span class="tool-icon">👤</span><div class="tool-name">Username</div><div class="tool-desc">Unique usernames for any platform</div></a>
+      <a href="../pin.html" class="tool-card"><span class="tool-icon">🔢</span><div class="tool-name">PIN Generator</div><div class="tool-desc">Secure PINs for banks & phones</div></a>
+      <a href="../wifi-password.html" class="tool-card"><span class="tool-icon">📶</span><div class="tool-name">WiFi + QR</div><div class="tool-desc">WiFi password with shareable QR code</div></a>
+      <a href="../api-key.html" class="tool-card"><span class="tool-icon">🔐</span><div class="tool-name">API Key</div><div class="tool-desc">UUID, hex, base64 secrets</div></a>
+      <a href="../breach-check.html" class="tool-card"><span class="tool-icon">🛡️</span><div class="tool-name">Breach Check</div><div class="tool-desc">HaveIBeenPwned k-anonymity check</div></a>
+      <a href="../bulk.html" class="tool-card"><span class="tool-icon">📦</span><div class="tool-name">Bulk Generator</div><div class="tool-desc">Generate 5–100 passwords, download CSV</div></a>
       <a href="history.html" class="tool-card"><span class="tool-icon">📜</span><div class="tool-name">History</div><div class="tool-desc">Your generated passwords (localStorage)</div></a>
     </div>
   </div>
@@ -465,9 +465,9 @@
   </div>
 </section>
 
-<script src="js/generator.js"></script>
-<script src="js/strength.js"></script>
-<script src="js/utils.js"></script>
+<script src="../js/generator.js"></script>
+<script src="../js/strength.js"></script>
+<script src="../js/utils.js"></script>
 <script>
   PKUtils.injectNav('index.html');
 
